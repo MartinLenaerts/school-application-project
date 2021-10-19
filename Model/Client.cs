@@ -9,6 +9,7 @@ public class Client {
 	public Client() {
 	}
 
+	//Test
 	private int id;
 
 	private string nom;
