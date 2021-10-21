@@ -11,9 +11,9 @@ public class Commande {
 
     private int id;
 
-    private time heure;
+    //private time heure;
 
-    private Date date;
+    //private Date date;
 
 
 
@@ -45,31 +45,31 @@ public class Commande {
     /// <summary>
     /// @return
     /// </summary>
-    public time getHeure() {
+    /*public time getHeure() {
         // TODO implement here
         return null;
-    }
+    }*/
 
     /// <summary>
     /// @param value
     /// </summary>
-    public void setHeure(time value) {
+  /*  public void setHeure(time value) {
         // TODO implement here
-    }
+    }*/
 
     /// <summary>
     /// @return
     /// </summary>
-    public Date getDate() {
+    /*public Date getDate() {
         // TODO implement here
         return null;
     }
-
+    */
     /// <summary>
     /// @param value
     /// </summary>
-    public void setDate(Date value) {
+   /* public void setDate(Date value) {
         // TODO implement here
-    }
+    }*/
 
 }

@@ -19,7 +19,7 @@ public class Client {
 
     private int telephone;
 
-    private Date dateFirst;
+   // private Date dateFirst;
 
 
     /// <summary>
@@ -100,16 +100,16 @@ public class Client {
     /// <summary>
     /// @return
     /// </summary>
-    public Date getDateFirst() {
+  /*  public Date getDateFirst() {
         // TODO implement here
         return null;
-    }
+    }*/
 
     /// <summary>
     /// @param value
     /// </summary>
-    public void setDateFirst(Date value) {
+  /*  public void setDateFirst(Date value) {
         // TODO implement here
     }
-
+  */
 }

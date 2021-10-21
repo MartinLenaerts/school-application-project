@@ -45,10 +45,10 @@ public class Commis : Employee {
     /// <summary>
     /// @return
     /// </summary>
-    public null recupererEtat() {
+   /* public null recupererEtat() {
         // TODO implement here
         return null;
-    }
+    }*/
 
     public void demanderFacture() {
         // TODO implement here
