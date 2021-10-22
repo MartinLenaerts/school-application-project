@@ -184,8 +184,25 @@ public class Commis : Employee {
         {
             Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)} {rdr.GetString(2)} {rdr.GetString(3)}");
         }
+        databaseObject.myConnection.Close();
     }
 
+
+    public String trouverRue(Database databaseObject)
+    {
+
+        double tel = 0;
+        Console.WriteLine("Saisissez le numero de telephone à partir duquel retrouver l'adresse");
+        tel = double.Parse(Console.ReadLine());
+
+        String rue = null;
+        databaseObject.myConnection.Open();
+        String query = "select rue from Client where tel =  " + tel;
+        SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
+        SQLiteDataReader rdr = myCommand.ExecuteReader();
+        databaseObject.myConnection.Close();
+        return rue;
+    }
 
     /*nom = "quatreFromage";
 

@@ -30,8 +30,11 @@ namespace Projet_applications
             commis.AjouterClient(databaseObject);
             //commis.GetClients(databaseObject);
             commis.GetClientsByCity(databaseObject);
+            commis.trouverRue(databaseObject);
 
-            Console.ReadKey();
+           
+
+             Console.ReadKey();
         }
     }
 }
