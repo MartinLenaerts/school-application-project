@@ -13,9 +13,6 @@ namespace Projet_applications
 
 
 
-        //Commande commande = new Commande(1, DateTime.Now);
-
-
         public String MsgClient()
         {
             // TODO implement here
@@ -146,7 +143,7 @@ namespace Projet_applications
             int choixTaille;
             string nom = "";
             string taille = "";
-    
+
 
             Console.WriteLine("Quelle type de pizza desirez-vous ?\r");
             Console.WriteLine("1- Quatre fromages\r");
@@ -219,7 +216,7 @@ namespace Projet_applications
                     break;
 
             }
-            String query = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
+            string query = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
             SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
             databaseObject.myConnection.Open();
             SQLiteDataReader reader = myCommand.ExecuteReader();
@@ -230,6 +227,12 @@ namespace Projet_applications
             databaseObject.myConnection.Close();
             Console.WriteLine("id=" + id);
 
+            PizzaType nomPizza = (PizzaType) Enum.Parse(typeof(PizzaType), nom);
+            Taille taillePizza = (Taille)Enum.Parse(typeof(PizzaType), nom);
+
+            Pizza pizza = new Pizza(id, nomPizza, taillePizza);
+
+            Commande commande = new Commande(1, DateTime.Now, pizza);
         }
 
         /*public void AjouterPrixFacture(int id, Facture facture)

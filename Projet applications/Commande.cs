@@ -6,13 +6,15 @@ namespace Projet_applications
     {
         public int Id { get; set; }
         private DateTime DateHeure { get; set; }
+        public Pizza _Pizza;
 
-        public Commande(int id, DateTime dateHeure)
+        public Commande(int id, DateTime dateHeure, Pizza pizza)
         {
             Id = id;
             this.DateHeure = dateHeure;
-            Pizza pizza = new Pizza(1, "type", "taille");
+            this._Pizza = pizza;
         }
+
 
         public void GenerateFacture()
         {

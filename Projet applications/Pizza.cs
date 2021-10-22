@@ -3,18 +3,19 @@ namespace Projet_applications
     public class Pizza
     {
         public int Id { get; set; }
-        public string Type { get; set; }
-        public string Taille { get; set; }
+        public PizzaType TypePizza;
+        public Taille TaillePizza;
 
-
-        public Pizza(int id, string type, string taille)
+        public Pizza(int id, PizzaType typePizza, Taille taillePizza)
         {
             Id = id;
-            Type = type;
-            Taille = taille;
+            this.TypePizza = typePizza;
+            this.TaillePizza = taillePizza;
         }
 
-        public void GetPrix()
+
+
+        public void getPrix()
         {
             // TODO implement here
         }
