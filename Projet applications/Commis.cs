@@ -229,13 +229,7 @@ public class Commis : Employee {
                 break;
 
         }
-        //Console.WriteLine("id=" + id);
 
-        /*String query = "select id from Pizzas where nom = " + nom + "and taille =" + taille;
-        SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
-        databaseObject.myConnection.Open();
-        id = myCommand.ExecuteNonQuery();
-        databaseObject.myConnection.Close();*/
 
     }
 
