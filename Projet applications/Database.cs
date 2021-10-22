@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using System.Data.SQLite;
 
+
  namespace Projet_applications
 {
     public class Database

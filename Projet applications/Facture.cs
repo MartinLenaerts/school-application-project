@@ -11,6 +11,10 @@ public class Facture {
 
     private int id { get; set; }
 
-    private double prix { get; set; }
+    private double Prix { get; set; }
+
+    public void setPrix()
+    {
+    }
 
 }

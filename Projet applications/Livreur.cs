@@ -33,10 +33,10 @@ public class Livreur : Employee {
     /// <summary>
     /// @return
     /// </summary>
-    public ListPizza prendrePizza() {
+    /*public ListPizza prendrePizza() {
         // TODO implement here
         return null;
-    }
+    }*/
 
     public void recevoirPaiement() {
         // TODO implement here

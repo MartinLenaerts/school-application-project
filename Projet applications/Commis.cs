@@ -47,10 +47,10 @@ public class Commis : Employee {
     /// <summary>
     /// @return
     /// </summary>
-    public null recupererEtat() {
+    /*public null recupererEtat() {
         // TODO implement here
         return null;
-    }
+    }*/
 
     public void demanderFacture() {
         // TODO implement here
@@ -140,5 +140,123 @@ public class Commis : Employee {
         Console.WriteLine("Rows added : {0}", result);
 
     }
+
+    public void AjouterPizzaCommande(Database databaseObject)
+    {
+        int id;
+        int choixNom;
+        int choixTaille;
+        string nom;
+        string taille;
+
+
+        Console.WriteLine("Quelle type de pizza desirez-vous ?\r");
+        Console.WriteLine("1- Quatre fromages\r");
+        Console.WriteLine("2- Barbecue\r");
+        Console.WriteLine("3- Veggie\r");
+        choixNom = Console.Read();
+        
+        Console.WriteLine("Quelle taille souhaitez-vous pour votre pizza ?\r");
+        Console.WriteLine("1- Petite\r");
+        Console.WriteLine("2- Moyenne\r");
+        Console.WriteLine("3- Grande\r");
+        choixTaille = Console.Read();
+
+
+        switch (choixNom)
+        {
+            case 1:
+                switch (choixTaille)
+                {
+                    case 1:
+                        nom = "quatreFromages";
+                        taille = "petite";
+                        string query = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
+                        SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
+                        databaseObject.myConnection.Open();
+                        id = myCommand.ExecuteNonQuery();
+                        databaseObject.myConnection.Close();
+                        Console.WriteLine("id=" + id);
+                        break;
+                    case 2:
+                        nom = "quatreFromages";
+                        taille = "moyenne";
+                        break;
+                    case 3:
+                        nom = "quatreFromages";
+                        taille = "grande";
+                        break;
+                }
+                break;
+            case 2:
+                switch (choixTaille)
+                {
+                    case 1:
+                        nom = "barbecue";
+                        taille = "petite";
+                        break;
+                    case 2:
+                        nom = "barbecue";
+                        taille = "moyenne";
+                        break;
+                    case 3:
+                        nom = "barbecue";
+                        taille = "grande";
+                        break;
+                }
+                break;
+            case 3:
+                switch (choixTaille)
+                {
+                    case 1:
+                        nom = "veggie";
+                        taille = "petite";
+                        break;
+                    case 2:
+                        nom = "veggie";
+                        taille = "moyenne";
+                        break;
+                    case 3:
+                        nom = "veggie";
+                        taille = "grande";
+                        break;
+                }
+                break;
+
+        }
+        
+        /*String query = "select id from Pizzas where nom = " + nom + "and taille =" + taille;
+        SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
+        databaseObject.myConnection.Open();
+        id = myCommand.ExecuteNonQuery();
+        databaseObject.myConnection.Close();*/
+
+    }
+
+    /*public void AjouterPrixFacture(int id, Facture facture)
+    {
+
+        switch (type)
+        {
+            case 1:
+                switch (taille)
+                {
+                    case 1:
+                        String query = "select id from Pizzas where nom = 'quatreFromages' and taille = 'petite'";
+                        SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
+                        databaseObject.myConnection.Open();
+                        facture.setPrix();
+                        prix = myCommand.ExecuteNonQuery();
+                        databaseObject.myConnection.Close();
+                        break;
+
+
+                }
+                break;
+        }
+
+        Console.WriteLine("type" + type + "taille" + taille + ", cela vous fera un total de" + prix + "€");
+
+    }*/
 
 }
