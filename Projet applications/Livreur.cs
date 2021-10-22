@@ -1,49 +1,47 @@
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-public class Livreur : Employee {
+namespace Projet_applications
+{
+    public class Livreur : Employee
+    {
+        public Livreur(int id, string nom, string prenom) : base(id, nom, prenom)
+        {
+        }
 
-    public Livreur() {
-    }
+
+        public Annexe AjouterAnnexe()
+        {
+            // TODO implement here
+            return null;
+        }
+
+        public void EffectuerLivraison()
+        {
+            // TODO implement here
+        }
 
 
-    /// <summary>
-    /// @return
-    /// </summary>
-    public Annexe ajouterAnnexe() {
-        // TODO implement here
-        return null;
-    }
+        public String EnvoyerConfirmation()
+        {
+            // TODO implement here
+            return null;
+        }
 
-    public void effectuerLivraison() {
-        // TODO implement here
-    }
 
-    /// <summary>
-    /// @return
-    /// </summary>
-    public String envoyerConfirmation() {
-        // TODO implement here
-        return null;
-    }
+        /*  public ListPizza prendrePizza() {
+              // TODO implement here
+              return null;
+          }*/
 
-    /// <summary>
-    /// @return
-    /// </summary>
-    /*public ListPizza prendrePizza() {
-        // TODO implement here
-        return null;
-    }*/
+        public void RecevoirPaiement()
+        {
+            // TODO implement here
+        }
 
-    public void recevoirPaiement() {
-        // TODO implement here
-    }
-
-    public void recupererFacture() {
-        // TODO implement here
+        public void RecupererFacture()
+        {
+            // TODO implement here
+        }
     }
 
 }

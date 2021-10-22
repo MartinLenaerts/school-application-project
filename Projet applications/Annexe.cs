@@ -1,19 +1,18 @@
+namespace Projet_applications
+{
+    public class Annexe
+    {
+        public string Nom { get; set; }
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+        public int Prix { get; set; }
 
-public class Annexe {
+        public double Volume { get; set; }
 
-    public Annexe() {
+        public Annexe(string nom, int prix, double volume)
+        {
+            Nom = nom;
+            Prix = prix;
+            Volume = volume;
+        }
     }
-
-    private string nom { get; set; }
-
-    private int prix { get; set; }
-
-    private double volume { get; set; }
-
-
 }

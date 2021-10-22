@@ -1,21 +1,14 @@
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-public class PizzaType {
+namespace Projet_applications
+{
+    public class PizzaType
+    {
+        public String Nom { get; set; }
 
-    public PizzaType() {
+        public void GetPrix()
+        {
+            // TODO implement here
+        }
     }
-
-    private String nom { get; set; }
-
-
-
-    public void getPrix() {
-        // TODO implement here
-    }
-
-
 }

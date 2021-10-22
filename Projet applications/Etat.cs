@@ -1,6 +1,9 @@
-
-public enum Etat {
-    PREPARATION,
-    LIVRAISON,
-    FERME
+namespace Projet_applications
+{
+    public enum Etat
+    {
+        Preparation,
+        Livraison,
+        Ferme
+    }
 }

@@ -1,20 +1,14 @@
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-public class Facture {
-
-    public Facture() {
-    }
-
-    private int id { get; set; }
-
-    private double Prix { get; set; }
-
-    public void setPrix()
+namespace Projet_applications
+{
+    public class Facture
     {
-    }
+        public int Id { get; set; }
+        public double Prix { get; set; }
 
+        public Facture(int id, double prix)
+        {
+            Id = id;
+            Prix = prix;
+        }
+    }
 }

@@ -1,24 +1,29 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class Client {
+namespace Projet_applications
+{
+    public class Client
+    {
+        public int Id { get; set; }
 
-    public Client() {
+        public string Nom { get; set; }
+
+        public string Prenom { get; set; }
+
+        public string Adresse { get; set; }
+
+        public int Telephone { get; set; }
+
+        public Client(int id, string nom, string prenom, string adresse, int telephone)
+        {
+            Id = id;
+            Nom = nom;
+            Prenom = prenom;
+            Adresse = adresse;
+            Telephone = telephone;
+        }
     }
-
-    private int id { get; set; }
-
-    private string nom { get; set; }
-
-    private string prenom { get; set; }
-
-    private string adresse { get; set; }
-
-    private int telephone { get; set; }
-
-    private DateTime dateFirst { get; set; }
-
 }

@@ -1,102 +1,93 @@
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data.SQLite;
 using Projet_applications;
 
-public class Commis : Employee {
-
-    public Commis() {
-    }
-
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public String msgClient() {
-        // TODO implement here
-        return null;
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public String msgCuisine() {
-        // TODO implement here
-        return null;
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public String msgLivreur() {
-        // TODO implement here
-        return null;
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public String msgCommis() {
-        // TODO implement here
-        return null;
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    /*public null recupererEtat() {
-        // TODO implement here
-        return null;
-    }*/
-
-    public void demanderFacture() {
-        // TODO implement here
-    }
-
-    public void encaisser() {
-        // TODO implement here
-    }
-
-    public void fermerCommande() {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public int gererCumul() {
-        // TODO implement here
-        return 0;
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public Facture genererFacture() {
-        // TODO implement here
-        return null;
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public Commande creerCommande() {
-        // TODO implement here
-        return null;
-    }
-
-    public void AjouterClient(Database databaseObject)
+namespace Projet_applications
+{
+    public class Commis : Employee
     {
-        String nom;
-        String prenom;
-        String ville;
-        double tel;
-        String date;
-        int numRue;
-        String rue;
+        public Commis(int id, string nom, string prenom) : base(id, nom, prenom)
+        {
+        }
+        
+        public String MsgClient()
+        {
+            // TODO implement here
+            return null;
+        }
+
+
+        public String MsgCuisine()
+        {
+            // TODO implement here
+            return null;
+        }
+
+
+        public String MsgLivreur()
+        {
+            // TODO implement here
+            return null;
+        }
+
+
+        public String MsgCommis()
+        {
+            // TODO implement here
+            return null;
+        }
+
+
+        /* public null recupererEtat() {
+             // TODO implement here
+             return null;
+         }*/
+        public void DemanderFacture()
+        {
+            // TODO implement here
+        }
+
+        public void Encaisser()
+        {
+            // TODO implement here
+        }
+
+        public void FermerCommande()
+        {
+            // TODO implement here
+        }
+
+
+        public int GererCumul()
+        {
+            // TODO implement here
+            return 0;
+        }
+
+
+        public Facture GenererFacture()
+        {
+            // TODO implement here
+            return null;
+        }
+
+
+        public Commande CreerCommande()
+        {
+            // TODO implement here
+            return null;
+        }
+
+        public void AjouterClient(Database databaseObject)
+        {
+            String nom;
+            String prenom;
+            String ville;
+            double tel;
+            String date;
+            int numRue;
+            String rue;
 
 
         Console.WriteLine("Saisissez un nom");
@@ -255,7 +246,7 @@ public class Commis : Employee {
                 break;
         }
 
-        Console.WriteLine("type" + type + "taille" + taille + ", cela vous fera un total de" + prix + "€");
+        Console.WriteLine("type" + type + "taille" + taille + ", cela vous fera un total de" + prix + "ï¿½");
 
     }*/
 

@@ -1,21 +1,21 @@
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-public class Commande {
+namespace Projet_applications
+{
+    public class Commande
+    {
+        public int Id { get; set; }
+        private DateTime DateHeure { get; set; }
 
-    public Commande() {
+        public Commande(int id, DateTime dateHeure)
+        {
+            Id = id;
+            this.DateHeure = dateHeure;
+        }
+
+        public void GenerateFacture()
+        {
+            // TODO implement here
+        }
     }
-
-    private int id { get; set; }
-
-    private DateTime date { get; set; }
-
-
-    public void generateFacture() {
-        // TODO implement here
-    }
-
 }

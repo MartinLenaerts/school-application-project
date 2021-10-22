@@ -8361,6 +8361,52 @@
 						}
 					],
 					"isAbstract": true
+<<<<<<< HEAD
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAF8nweqr9b7rzU=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "Class1"
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAF8nwe6ute6iUQ=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "Class2"
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAF8nwfFONh5u/c=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "Cumul",
+					"attributes": [
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAF8nwglydplacc=",
+							"_parent": {
+								"$ref": "AAAAAAF8nwfFONh5u/c="
+							},
+							"name": "somme",
+							"type": "int"
+						}
+					]
+				},
+				{
+					"_type": "UMLInterface",
+					"_id": "AAAAAAF8nyKP1hek1pI=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "Observer"
+=======
+>>>>>>> Database
 				}
 			]
 		}

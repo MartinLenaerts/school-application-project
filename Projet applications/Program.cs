@@ -27,8 +27,9 @@ namespace Projet_applications
             databaseObject.myConnection.Close();
             Console.WriteLine("Rows added : {0}", result);
 
-            Commis commis = new Commis();
-           // commis.AjouterClient(databaseObject);
+            Commis commis = new Commis(1,"CommisNom","CommisPrenom");
+            commis.AjouterClient(databaseObject);
+            // commis.AjouterClient(databaseObject);
 
             commis.AjouterPizzaCommande(databaseObject);
 
