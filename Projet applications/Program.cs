@@ -7,8 +7,6 @@ namespace Projet_applications
     {
         static void Main(string[] args)
         {
-            
-            Console.WriteLine("Hello World!");
             Database databaseObject = new Database();
             //Test insertion dans la database
 

@@ -139,6 +139,7 @@ namespace Projet_applications
         public void AjouterPizzaCommande(Database databaseObject)
         {
             int id = 0;
+            float prix = 0;
             int choixNom;
             int choixTaille;
             string nom = "";
@@ -216,13 +217,21 @@ namespace Projet_applications
                     break;
 
             }
-            string query = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
-            SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
+            string queryId = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
+            SQLiteCommand idCommand = new SQLiteCommand(queryId, databaseObject.myConnection);
             databaseObject.myConnection.Open();
-            SQLiteDataReader reader = myCommand.ExecuteReader();
-            while (reader.Read())
+            SQLiteDataReader readerId = idCommand.ExecuteReader();
+            while (readerId.Read())
             {
-                id = reader.GetInt32(0);
+                id = readerId.GetInt32(0);
+            }
+
+            string queryPrix = "select prix from Pizzas where id = " + id;
+            SQLiteCommand prixCommand = new SQLiteCommand(queryPrix, databaseObject.myConnection);
+            SQLiteDataReader readerPrix = prixCommand.ExecuteReader();
+            while (readerPrix.Read())
+            {
+                prix = readerPrix.GetInt32(0);
             }
             databaseObject.myConnection.Close();
             Console.WriteLine("id=" + id);
@@ -233,33 +242,11 @@ namespace Projet_applications
             Pizza pizza = new Pizza(id, nomPizza, taillePizza);
 
             Commande commande = new Commande(1, DateTime.Now, pizza);
-        }
 
-        /*public void AjouterPrixFacture(int id, Facture facture)
-        {
-    
-            switch (type)
-            {
-                case 1:
-                    switch (taille)
-                    {
-                        case 1:
-                            String query = "select id from Pizzas where nom = 'quatreFromages' and taille = 'petite'";
-                            SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
-                            databaseObject.myConnection.Open();
-                            facture.setPrix();
-                            prix = myCommand.ExecuteNonQuery();
-                            databaseObject.myConnection.Close();
-                            break;
-    
-    
-                    }
-                    break;
-            }
-    
-            Console.WriteLine("type" + type + "taille" + taille + ", cela vous fera un total de" + prix + "�");
-    
-        }*/
+            Facture facture = new Facture(1, prix);
+            facture.AjouterPrixFacture(prix);
+
+        }
 
     }
 }
