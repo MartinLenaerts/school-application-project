@@ -154,13 +154,13 @@ public class Commis : Employee {
         Console.WriteLine("1- Quatre fromages\r");
         Console.WriteLine("2- Barbecue\r");
         Console.WriteLine("3- Veggie\r");
-        choixNom = Console.Read();
-        
+        choixNom = Convert.ToInt32(Console.ReadLine());
+
         Console.WriteLine("Quelle taille souhaitez-vous pour votre pizza ?\r");
         Console.WriteLine("1- Petite\r");
         Console.WriteLine("2- Moyenne\r");
         Console.WriteLine("3- Grande\r");
-        choixTaille = Console.Read();
+        choixTaille = Convert.ToInt32(Console.ReadLine());
 
 
         switch (choixNom)
@@ -171,12 +171,17 @@ public class Commis : Employee {
                     case 1:
                         nom = "quatreFromages";
                         taille = "petite";
-                        string query = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
+                        String query = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
                         SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
                         databaseObject.myConnection.Open();
-                        id = myCommand.ExecuteNonQuery();
+                        SQLiteDataReader reader = myCommand.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Console.WriteLine($"{reader.GetInt32(0)}");
+                            id = reader.GetInt32(0);
+                            Console.WriteLine("id=" + id);
+                        }
                         databaseObject.myConnection.Close();
-                        Console.WriteLine("id=" + id);
                         break;
                     case 2:
                         nom = "quatreFromages";
@@ -224,7 +229,8 @@ public class Commis : Employee {
                 break;
 
         }
-        
+        //Console.WriteLine("id=" + id);
+
         /*String query = "select id from Pizzas where nom = " + nom + "and taille =" + taille;
         SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
         databaseObject.myConnection.Open();
