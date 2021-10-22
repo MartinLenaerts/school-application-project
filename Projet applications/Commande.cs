@@ -11,6 +11,7 @@ namespace Projet_applications
         {
             Id = id;
             this.DateHeure = dateHeure;
+            Pizza pizza = new Pizza(1, "type", "taille");
         }
 
         public void GenerateFacture()

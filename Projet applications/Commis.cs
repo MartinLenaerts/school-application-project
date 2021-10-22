@@ -11,6 +11,11 @@ namespace Projet_applications
         {
         }
 
+
+
+        //Commande commande = new Commande(1, DateTime.Now);
+
+
         public String MsgClient()
         {
             // TODO implement here
@@ -136,12 +141,12 @@ namespace Projet_applications
 
         public void AjouterPizzaCommande(Database databaseObject)
         {
-            int id;
+            int id = 0;
             int choixNom;
             int choixTaille;
-            string nom;
-            string taille;
-
+            string nom = "";
+            string taille = "";
+    
 
             Console.WriteLine("Quelle type de pizza desirez-vous ?\r");
             Console.WriteLine("1- Quatre fromages\r");
@@ -164,19 +169,6 @@ namespace Projet_applications
                         case 1:
                             nom = "quatreFromages";
                             taille = "petite";
-                            String query = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" +
-                                           taille + "\"";
-                            SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
-                            databaseObject.myConnection.Open();
-                            SQLiteDataReader reader = myCommand.ExecuteReader();
-                            while (reader.Read())
-                            {
-                                Console.WriteLine($"{reader.GetInt32(0)}");
-                                id = reader.GetInt32(0);
-                                Console.WriteLine("id=" + id);
-                            }
-
-                            databaseObject.myConnection.Close();
                             break;
                         case 2:
                             nom = "quatreFromages";
@@ -227,7 +219,16 @@ namespace Projet_applications
                     break;
 
             }
-
+            String query = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
+            SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
+            databaseObject.myConnection.Open();
+            SQLiteDataReader reader = myCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                id = reader.GetInt32(0);
+            }
+            databaseObject.myConnection.Close();
+            Console.WriteLine("id=" + id);
 
         }
 
