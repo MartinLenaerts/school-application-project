@@ -9,107 +9,16 @@ public class Client {
     public Client() {
     }
 
-    private int id;
+    private int id { get; set; }
 
-    private string nom;
+    private string nom { get; set; }
 
-    private string prenom;
+    private string prenom { get; set; }
 
-    private string adresse;
+    private string adresse { get; set; }
 
-    private int telephone;
+    private int telephone { get; set; }
 
-   // private Date dateFirst;
+    private DateTime dateFirst { get; set; }
 
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public int getId() {
-        // TODO implement here
-        return 0;
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setId(int value) {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public string getNom() {
-        // TODO implement here
-        return "";
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setNom(string value) {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public string getPrenom() {
-        // TODO implement here
-        return "";
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setPrenom(string value) {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public string getAdresse() {
-        // TODO implement here
-        return "";
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setAdresse(string value) {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public int getTelephone() {
-        // TODO implement here
-        return 0;
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setTelephone(int value) {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-  /*  public Date getDateFirst() {
-        // TODO implement here
-        return null;
-    }*/
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-  /*  public void setDateFirst(Date value) {
-        // TODO implement here
-    }
-  */
 }

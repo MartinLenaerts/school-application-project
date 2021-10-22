@@ -9,7 +9,7 @@ public class PizzaType {
     public PizzaType() {
     }
 
-    private String nom;
+    private String nom { get; set; }
 
 
 
@@ -17,34 +17,5 @@ public class PizzaType {
         // TODO implement here
     }
 
-    /// <summary>
-    /// @return
-    /// </summary>
-    /*public void getNom() {
-        // TODO implement here
-        return null;
-    }*/
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-   /* public void setNom(void value) {
-        // TODO implement here
-    }*/
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    /*public void getNom() {
-        // TODO implement here
-        return null;
-    }*/
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    /*public void setNom(void value) {
-        // TODO implement here
-    }*/
 
 }

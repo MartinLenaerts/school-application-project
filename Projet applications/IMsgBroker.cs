@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Projet_applications
 {
-    interface Interface1
+    interface IMsgBroker
     {
     }
 }

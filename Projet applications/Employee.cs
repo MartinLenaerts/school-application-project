@@ -9,55 +9,10 @@ public abstract class Employee {
     public Employee() {
     }
 
-    private int id;
+    private int id { get; set; }
 
-    private string nom;
+    private string nom { get; set; }
 
-    private string prenom;
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public int getId() {
-        // TODO implement here
-        return 0;
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setId(int value) {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public string getNom() {
-        // TODO implement here
-        return "";
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setNom(string value) {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public string getPrenom() {
-        // TODO implement here
-        return "";
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setPrenom(string value) {
-        // TODO implement here
-    }
+    private string prenom { get; set; }
 
 }
