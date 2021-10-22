@@ -1,18 +1,10 @@
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-public abstract class Pizza {
-
-    public Pizza() {
+namespace Projet_applications
+{
+    public abstract class Pizza
+    {
+        public void GetPrix()
+        {
+            // TODO implement here
+        }
     }
-
-
-
-    public void getPrix() {
-        // TODO implement here
-    }
-
 }

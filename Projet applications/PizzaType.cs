@@ -1,50 +1,19 @@
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-public class PizzaType {
+namespace Projet_applications
+{
+    public class PizzaType
+    {
+        public String Nom { get; set; }
 
-    public PizzaType() {
+        public PizzaType(string nom)
+        {
+            Nom = nom;
+        }
+
+        public void GetPrix()
+        {
+            // TODO implement here
+        }
     }
-
-    private String nom;
-
-
-
-    public void getPrix() {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    /*public void getNom() {
-        // TODO implement here
-        return null;
-    }*/
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-   /* public void setNom(void value) {
-        // TODO implement here
-    }*/
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    /*public void getNom() {
-        // TODO implement here
-        return null;
-    }*/
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    /*public void setNom(void value) {
-        // TODO implement here
-    }*/
-
 }
