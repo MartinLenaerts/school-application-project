@@ -28,7 +28,8 @@ namespace Projet_applications
             Console.WriteLine("Rows added : {0}", result);*/
             Commis commis = new Commis();
             commis.AjouterClient(databaseObject);
-            commis.GetClients(databaseObject);
+            //commis.GetClients(databaseObject);
+            commis.GetClientsByCity(databaseObject);
 
             Console.ReadKey();
         }

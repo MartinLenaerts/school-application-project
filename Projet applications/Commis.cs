@@ -172,19 +172,24 @@ public class Commis : Employee {
 
     }
 
-    /*public void afficherClients(Database databaseObject)
+
+    public void GetClientsByCity(Database databaseObject)
     {
         databaseObject.myConnection.Open();
-        String query = "select * from Client";
+        String query = "select * from Client order by ville";
         SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
         SQLiteDataReader rdr = myCommand.ExecuteReader();
 
         while (rdr.Read())
         {
-            Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)} {rdr.GetString(2)}");
+            Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)} {rdr.GetString(2)} {rdr.GetString(3)}");
         }
-    }*/
+    }
 
+
+    /*nom = "quatreFromage";
+
+    string requete = "Select id from Pizzas where nom = " + nom + "and taille = " + taille;*/
 
 
 }
