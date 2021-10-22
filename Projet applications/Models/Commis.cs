@@ -1,5 +1,5 @@
-
 using System;
+using System.Data.Entity.Core.Objects;
 using System.Data.SQLite;
 using Projet_applications;
 
@@ -7,10 +7,6 @@ namespace Projet_applications
 {
     public class Commis : Employee
     {
-        public Commis(int id, string nom, string prenom) : base(id, nom, prenom)
-        {
-        }
-
         public String MsgClient()
         {
             // TODO implement here
@@ -131,7 +127,6 @@ namespace Projet_applications
 
             databaseObject.myConnection.Close();
             Console.WriteLine("Rows added : {0}", result);
-
         }
 
         public void AjouterPizzaCommande(Database databaseObject)
@@ -225,10 +220,7 @@ namespace Projet_applications
                     }
 
                     break;
-
             }
-
-
         }
 
         /*public void AjouterPrixFacture(int id, Facture facture)
@@ -256,6 +248,5 @@ namespace Projet_applications
             Console.WriteLine("type" + type + "taille" + taille + ", cela vous fera un total de" + prix + "�");
     
         }*/
-
     }
 }

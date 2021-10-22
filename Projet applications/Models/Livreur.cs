@@ -4,11 +4,6 @@ namespace Projet_applications
 {
     public class Livreur : Employee
     {
-        public Livreur(int id, string nom, string prenom) : base(id, nom, prenom)
-        {
-        }
-
-
         public Annexe AjouterAnnexe()
         {
             // TODO implement here
