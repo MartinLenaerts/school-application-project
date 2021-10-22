@@ -1,21 +1,16 @@
+namespace Projet_applications
+{
+    public class Cuisinier : Employee
+    {
+        public Cuisinier(int id, string nom, string prenom) : base(id, nom, prenom)
+        {
+        }
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-public class Cuisinier : Employee {
-
-    public Cuisinier() {
+        public Pizza PreparerPizza()
+        {
+            // TODO implement here
+            return null;
+        }
     }
-
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public Pizza preparerPizza() {
-        // TODO implement here
-        return null;
-    }
-
 }

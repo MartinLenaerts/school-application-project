@@ -1,76 +1,21 @@
-
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-public class Commande {
+namespace Projet_applications
+{
+    public class Commande
+    {
+        public int Id { get; set; }
+        private DateTime DateHeure { get; set; }
 
-    public Commande() {
+        public Commande(int id, DateTime dateHeure)
+        {
+            Id = id;
+            this.DateHeure = dateHeure;
+        }
+
+        public void GenerateFacture()
+        {
+            // TODO implement here
+        }
     }
-
-    private int id;
-
-    //private time heure;
-
-    //private Date date;
-
-
-
-
-
-
-
-
-
-    public void generateFacture() {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public int getId() {
-        // TODO implement here
-        return 0;
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setId(int value) {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    /*public time getHeure() {
-        // TODO implement here
-        return null;
-    }*/
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-  /*  public void setHeure(time value) {
-        // TODO implement here
-    }*/
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    /*public Date getDate() {
-        // TODO implement here
-        return null;
-    }
-    */
-    /// <summary>
-    /// @param value
-    /// </summary>
-   /* public void setDate(Date value) {
-        // TODO implement here
-    }*/
-
 }

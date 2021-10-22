@@ -1,63 +1,16 @@
+namespace Projet_applications
+{
+    public abstract class Employee
+    {
+        public int Id { get; set; }
+        public string Nom { get; set; }
+        public string Prenom { get; set; }
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-public abstract class Employee {
-
-    public Employee() {
+        protected Employee(int id, string nom, string prenom)
+        {
+            Id = id;
+            Nom = nom;
+            Prenom = prenom;
+        }
     }
-
-    private int id;
-
-    private string nom;
-
-    private string prenom;
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public int getId() {
-        // TODO implement here
-        return 0;
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setId(int value) {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public string getNom() {
-        // TODO implement here
-        return "";
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setNom(string value) {
-        // TODO implement here
-    }
-
-    /// <summary>
-    /// @return
-    /// </summary>
-    public string getPrenom() {
-        // TODO implement here
-        return "";
-    }
-
-    /// <summary>
-    /// @param value
-    /// </summary>
-    public void setPrenom(string value) {
-        // TODO implement here
-    }
-
 }

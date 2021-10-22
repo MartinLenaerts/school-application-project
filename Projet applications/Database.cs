@@ -1,11 +1,7 @@
-
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Data.SQLite;
 
-namespace Projet_applications
+ namespace Projet_applications
 {
     public class Database
     {
@@ -18,10 +14,8 @@ namespace Projet_applications
 
             if (File.Exists("./database.sqlite3") == false)
             {
-              
-
                 SQLiteConnection.CreateFile("database.sqlite3");
-                Console.WriteLine("Created Database");
+                System.Console.WriteLine("Created Database");
 
             }
 
@@ -37,4 +31,3 @@ namespace Projet_applications
        
     }
 }
-

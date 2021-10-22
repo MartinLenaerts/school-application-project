@@ -25,8 +25,9 @@ namespace Projet_applications
             var result = myCommand.ExecuteNonQuery();
 
             databaseObject.myConnection.Close();
-            Console.WriteLine("Rows added : {0}", result);*/
-            Commis commis = new Commis();
+            Console.WriteLine("Rows added : {0}", result);
+*/
+            Commis commis = new Commis(1,"CommisNom","CommisPrenom");
             commis.AjouterClient(databaseObject);
             //commis.GetClients(databaseObject);
             commis.GetClientsByCity(databaseObject);
@@ -34,7 +35,7 @@ namespace Projet_applications
 
            
 
-             Console.ReadKey();
+            Console.ReadKey();
         }
     }
 }
