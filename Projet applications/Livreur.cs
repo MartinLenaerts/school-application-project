@@ -45,5 +45,4 @@ public class Livreur : Employee {
     public void recupererFacture() {
         // TODO implement here
     }
-
 }

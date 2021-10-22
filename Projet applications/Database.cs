@@ -1,3 +1,4 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Data.SQLite;
 
 namespace Projet_applications
 {
-    class Database
+    public class Database
     {
         public SQLiteConnection myConnection;
 
@@ -17,8 +18,10 @@ namespace Projet_applications
 
             if (File.Exists("./database.sqlite3") == false)
             {
+              
+
                 SQLiteConnection.CreateFile("database.sqlite3");
-                System.Console.WriteLine("Created Database");
+                Console.WriteLine("Created Database");
 
             }
 
@@ -28,38 +31,10 @@ namespace Projet_applications
            
             }
 
-            /*void OpenConnection()
-            {
-                if(myConnection.State == System.Data.ConnectionState.Open)
-                {
-                    myConnection.Open();
-                }
-            }
-            void CloseConnection()
-            {
-                if(myConnection.State != System.Data.ConnectionState.Closed)
-                {
-                    myConnection.Clone();
-                }
-            }*/
-
            
         }
 
-       /* internal void CloseConnection()
-        {
-            if (myConnection.State != System.Data.ConnectionState.Closed)
-            {
-                myConnection.Clone();
-            }
-        }
-
-        internal void OpenConnection()
-        {
-            if (myConnection.State == System.Data.ConnectionState.Open)
-            {
-                myConnection.Open();
-            }
-        }*/
+       
     }
 }
+
