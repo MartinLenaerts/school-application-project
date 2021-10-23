@@ -1,6 +1,16 @@
+DROP TABLE IF EXISTS AnnexeCommande;
+DROP TABLE IF EXISTS PizzaCommande;
+DROP TABLE IF EXISTS Pizza;
+DROP TABLE IF EXISTS Annexe;
+DROP TABLE IF EXISTS Commande;
+DROP TABLE IF EXISTS Facture;
+DROP TABLE IF EXISTS Employee;
+DROP TABLE IF EXISTS Client;
+
+
 CREATE TABLE IF NOT EXISTS Client
 (
-    id        integer PRIMARY KEY,
+    id        integer PRIMARY KEY AUTOINCREMENT,
     nom       TEXT,
     prenom    TEXT,
     ville     TEXT,
@@ -13,7 +23,7 @@ CREATE TABLE IF NOT EXISTS Client
 
 CREATE TABLE IF NOT EXISTS Employee
 (
-    id     integer PRIMARY KEY,
+    id     integer PRIMARY KEY AUTOINCREMENT,
     nom    TEXT,
     prenom TEXT,
     type   TEXT
@@ -22,14 +32,14 @@ CREATE TABLE IF NOT EXISTS Employee
 
 CREATE TABLE IF NOT EXISTS Facture
 (
-    id   integer PRIMARY KEY,
+    id   integer PRIMARY KEY AUTOINCREMENT,
     prix NUMERIC
 
 );
 
 CREATE TABLE IF NOT EXISTS Annexe
 (
-    id     integer PRIMARY KEY,
+    id     integer PRIMARY KEY AUTOINCREMENT,
     nom    TEXT,
     volume NUMERIC,
     prix   NUMERIC
@@ -37,19 +47,19 @@ CREATE TABLE IF NOT EXISTS Annexe
 );
 CREATE TABLE IF NOT EXISTS Pizza
 (
-    id     integer PRIMARY KEY,
+    id     integer PRIMARY KEY AUTOINCREMENT,
     nom    TEXT,
     taille TEXT,
-    prix   NUMERIC
-
+    prix   NUMERIC,
+    type   text
 );
 CREATE TABLE IF NOT EXISTS Commande
 (
-    id          integer PRIMARY KEY,
+    id          integer PRIMARY KEY AUTOINCREMENT,
     heure       TEXT,
     date        TEXT,
     clientId    integer,
-    factureId   integer,
+    factureId   integer DEFAULT NULL,
     commisId    integer,
     livreurId   integer,
     cuisinierId integer,
@@ -62,7 +72,7 @@ CREATE TABLE IF NOT EXISTS Commande
 );
 CREATE TABLE IF NOT EXISTS AnnexeCommande
 (
-    id         integer PRIMARY KEY,
+    id         integer PRIMARY KEY AUTOINCREMENT,
     annexeId   int,
     commandeId int,
     CONSTRAINT annexeFk FOREIGN KEY (annexeId) REFERENCES Annexe (id),
@@ -72,7 +82,7 @@ CREATE TABLE IF NOT EXISTS AnnexeCommande
 );
 CREATE TABLE IF NOT EXISTS PizzaCommande
 (
-    id         integer PRIMARY KEY,
+    id         integer PRIMARY KEY AUTOINCREMENT,
     pizzaId    int,
     commandeId int,
     CONSTRAINT pizzaFk FOREIGN KEY (pizzaId) REFERENCES Pizza (id),

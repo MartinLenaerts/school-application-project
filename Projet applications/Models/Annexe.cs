@@ -7,12 +7,11 @@ namespace Projet_applications
         public int Prix { get; set; }
 
         public double Volume { get; set; }
-
-        public Annexe(string nom, int prix, double volume)
+        
+        
+        public override string ToString()
         {
-            Nom = nom;
-            Prix = prix;
-            Volume = volume;
+            return Nom;
         }
     }
 }

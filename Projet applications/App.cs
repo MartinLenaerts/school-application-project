@@ -1,8 +1,10 @@
 using System;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Data.SqlClient;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using Microsoft.Data.Sqlite;
 
@@ -19,12 +21,20 @@ namespace Projet_applications
         public void Start()
         {
             Database.Open();
+            Database.Seed();
 
             Begin:
             WelcomeMessage();
-            int commisId = Console.Read();
-            SQLiteDataReader reader = Database.Select("SELECT * FROM Commis WHERE id=" + commisId);
+            string stringCommisId = Console.ReadLine();
+            int commisId;
+            if (!Int32.TryParse(stringCommisId, out commisId))
+            {
+                Console.WriteLine("Veuillez entrer un id valide");
+                goto Begin;
+            }
 
+            SQLiteDataReader reader =
+                Database.Select("SELECT * FROM Employee WHERE type='commis' AND  id=" + commisId.ToString());
             if (!reader.HasRows)
             {
                 Console.WriteLine("Aucun commis ne correspond à ce numero");
@@ -35,14 +45,23 @@ namespace Projet_applications
 
             CurrentCommis = new Commis()
             {
-                Id = reader.GetInt32(0),
-                Nom = reader.GetString(0),
-                Prenom = reader.GetString(0)
+                Id = Int32.Parse("" + reader.GetValue(0)),
+                Nom = (string) reader.GetValue(1),
+                Prenom = (string) reader.GetValue(2)
             };
 
+            Menu:
+            MenuMessage();
             try
             {
-                int choice = Console.Read();
+                string stringChoice = Console.ReadLine();
+                int choice;
+                if (!Int32.TryParse(stringChoice, out choice))
+                {
+                    Console.WriteLine("Veuillez entrer un id valide");
+                    goto Menu;
+                }
+
                 switch (choice)
                 {
                     case 1:
@@ -55,6 +74,7 @@ namespace Projet_applications
                         StatistiquesManagement();
                         break;
                     default:
+                        Console.WriteLine("Veuillez choisir un nombre valide");
                         goto Begin;
                 }
             }
@@ -76,7 +96,7 @@ namespace Projet_applications
 
         public void MenuMessage()
         {
-            Console.WriteLine("Bienvenue ! ");
+            Console.WriteLine("Bonjour " + CurrentCommis.Nom + " " + CurrentCommis.Prenom);
             Console.WriteLine("Entrez : ");
             Console.WriteLine("1 : pour gerer les clients");
             Console.WriteLine("2 : pour gerer les commandes");
@@ -85,14 +105,21 @@ namespace Projet_applications
 
         public void ClientManagement()
         {
+            Begin:
             Console.WriteLine("Entrez : ");
             Console.WriteLine("1 : pour afficher les clients par ordre alphabetiques");
-            Console.WriteLine("2 : pour afficher les clients par ordre ville");
+            Console.WriteLine("2 : pour afficher les clients d'une ville");
             Console.WriteLine("3 : pour afficher montants des achats cumulés");
-            Begin:
             try
             {
-                int choice = Console.Read();
+                string stringChoice = Console.ReadLine();
+                int choice;
+                if (!Int32.TryParse(stringChoice, out choice))
+                {
+                    Console.WriteLine("Veuillez entrer un numero valide");
+                    goto Begin;
+                }
+
                 switch (choice)
                 {
                     case 1:
@@ -102,7 +129,7 @@ namespace Projet_applications
                         CurrentCommis.GetClientsByCity(Database);
                         break;
                     case 3:
-                        //CurrentCommis.GetAmounts(Database);
+                        CurrentCommis.GetAmounts(Database);
                         break;
                     default:
                         goto Begin;
@@ -121,6 +148,74 @@ namespace Projet_applications
             Console.WriteLine("1 : creer une nouvelle commande");
             Console.WriteLine("2 : afficher une commande");
             Console.WriteLine("3 : modifier une commande");
+            Begin:
+            try
+            {
+                string stringChoice = Console.ReadLine();
+                int choice;
+                if (!Int32.TryParse(stringChoice, out choice))
+                {
+                    Console.WriteLine("Veuillez entrer un numero valide");
+                    goto Begin;
+                }
+
+                switch (choice)
+                {
+                    case 1:
+                        CurrentCommis.CreerCommande(Database);
+                        break;
+                    case 2:
+                        CurrentCommis.AfficherCommande(Database);
+                        break;
+                    case 3:
+                        SetCommand();
+                        break;
+                    default:
+                        goto Begin;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                goto Begin;
+            }
+        }
+
+        private void SetCommand()
+        {
+            Begin:
+            Console.WriteLine("Entrez : ");
+            Console.WriteLine("1 : Ajouter des pizzas");
+            Console.WriteLine("2 : Ajouter des Annexes");
+
+            string stringChoice = Console.ReadLine();
+            int choice;
+            if (!Int32.TryParse(stringChoice, out choice))
+            {
+                Console.WriteLine("Veuillez entrer un numero valide");
+                goto Begin;
+            }
+
+            try
+            {
+                switch (choice)
+                {
+                    case 1:
+                        CurrentCommis.AjouterPizzaCommande(Database);
+                        break;
+                    case 2:
+                        CurrentCommis.AjouterAnnexe(Database);
+                        break;
+                    default:
+                        goto Begin;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                goto Begin;
+            }
         }
 
         public void StatistiquesManagement()
