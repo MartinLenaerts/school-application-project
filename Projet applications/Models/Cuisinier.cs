@@ -8,12 +8,11 @@ namespace Projet_applications
     {
         public Pizza PreparerPizza(Database db)
         {
-
             Pizza pizza = new Pizza();
             int id = 0;
-            Console.WriteLine("Quelle Pizza pr�parer ?");
+            Console.WriteLine("Quelle Pizza préparer ?");
             id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Preparation de la Pizza n* " + id);
+            Console.WriteLine("Preparation de la Pizza n° " + id);
             String query = "select id, taille, type, prix from Pizzas where id = " + id;
   
             SQLiteCommand myCommand = new SQLiteCommand(query, db.myConnection);
