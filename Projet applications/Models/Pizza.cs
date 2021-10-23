@@ -1,7 +1,8 @@
 namespace Projet_applications
 {
-    public abstract class Pizza
+    public class Pizza
     {
+        public int Id { get; set; }
         public Taille taille { get; set; }
         public Type type { get; set; }
 

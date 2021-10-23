@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -8,10 +7,6 @@ namespace Projet_applications
 {
     public class Commis : Employee
     {
-        public Commis(int id, string nom, string prenom) : base(id, nom, prenom)
-        {
-        }
-
         public String MsgClient()
         {
             // TODO implement here
@@ -132,7 +127,6 @@ namespace Projet_applications
 
             databaseObject.myConnection.Close();
             Console.WriteLine("Rows added : {0}", result);
-
         }
 
         public void AjouterPizzaCommande(Database databaseObject)
@@ -214,8 +208,8 @@ namespace Projet_applications
                     }
 
                     break;
-
             }
+
             string queryId = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
             SQLiteCommand idCommand = new SQLiteCommand(queryId, databaseObject.myConnection);
             databaseObject.myConnection.Open();
@@ -232,19 +226,19 @@ namespace Projet_applications
             {
                 prix = readerPrix.GetInt32(0);
             }
+
             databaseObject.myConnection.Close();
             Console.WriteLine("id=" + id);
 
-            PizzaType nomPizza = (PizzaType) Enum.Parse(typeof(PizzaType), nom);
-            Taille taillePizza = (Taille)Enum.Parse(typeof(PizzaType), nom);
+            Type nomPizza = (Type) Enum.Parse(typeof(Type), nom);
+            Taille taillePizza = (Taille) Enum.Parse(typeof(Type), nom);
 
-            Pizza pizza = new Pizza(id, nomPizza, taillePizza);
+            Pizza pizza = new Pizza() {Id = id, taille = taillePizza, type = nomPizza};
 
-            Commande commande = new Commande(1, DateTime.Now, pizza);
+            Commande commande = new Commande() {Id = 1, DateHeure = DateTime.Now, Pizza = new List<Pizza>() {pizza}};
 
-            Facture facture = new Facture(1, prix);
+            Facture facture = new Facture() {Id = 1, Prix = prix};
             facture.AjouterPrixFacture(prix);
-
         }
 
         public List<String> GetClients(Database databaseObject)
@@ -308,6 +302,5 @@ namespace Projet_applications
             databaseObject.myConnection.Close();
             return adresse;
         }
-
     }
 }

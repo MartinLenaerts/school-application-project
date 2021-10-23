@@ -16,11 +16,6 @@ namespace Projet_applications
         public Cuisinier Cuisinier { get; set; }
         public Etat Etat { get; set; }
 
-        Commande()
-        {
-            DateHeure = new DateTime();
-        }
-
         public void GenerateFacture()
         {
             // TODO implement here
