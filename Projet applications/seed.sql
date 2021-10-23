@@ -12,6 +12,8 @@ DELETE
 FROM AnnexeCommande;
 DELETE
 FROM PizzaCommande;
+DELETE
+FROM Facture;
 
 UPDATE `sqlite_sequence`
 SET `seq` = 0;
@@ -31,15 +33,15 @@ VALUES ("coca", 1.5, 500),
        ("orangina", 1.7, 500);
 
 INSERT INTO Pizza (nom, prix, taille, type)
-VALUES ("quatreFromages petite", 10, "petite", "quatreFromages"),
-       ("barbecue petite", 9, "petite", "barbecue"),
-       ("veggie petite", 8, "petite", "veggie"),
-       ("quatreFromages moyenne", 12, "moyenne", "quatreFromages"),
-       ("barbecue moyenne", 11, "moyenne", "barbecue"),
-       ("veggie moyenne", 10, "moyenne", "veggie"),
-       ("quatreFromages grande", 15, "grande", "quatreFromages"),
-       ("barbecue grande", 14, "grande", "barbecue"),
-       ("veggie grande", 13, "grande", "veggie");
+VALUES ("QuatreFromages", 10, "Petite", "QuatreFromages"),
+       ("Barbecue", 9, "Petite", "Barbecue"),
+       ("Veggie", 8, "Petite", "Veggie"),
+       ("QuatreFromages", 12, "Moyenne", "QuatreFromages"),
+       ("Barbecue", 11, "Moyenne", "Barbecue"),
+       ("Veggie", 10, "Moyenne", "Veggie"),
+       ("QuatreFromages", 15, "Grande", "QuatreFromages"),
+       ("Barbecue", 14, "Grande", "Barbecue"),
+       ("Veggie", 13, "Grande", "Veggie");
 
 INSERT INTO Facture (prix)
 VALUES (13.1),
@@ -47,10 +49,10 @@ VALUES (13.1),
        (8);
 
 
-INSERT INTO Commande (heure, date, factureId, clientId, commisId, livreurId, cuisinierId)
-VALUES ("11h00", "01/02/2020", 1, 1, 1, 2, 3),
-       ("12h00", "07/12/2020", 2, 2, 1, 2, 3),
-       ("13h00", "09/09/2021", 3, 1, 1, 2, 3);
+INSERT INTO Commande (heure, date, factureId, clientId, commisId, livreurId, cuisinierId,etat)
+VALUES ("11h00", "01/02/2020", 1, 1, 1, 2, 3,"FERME"),
+       ("12h00", "07/12/2020", 2, 2, 1, 2, 3,"FERME"),
+       ("13h00", "09/09/2021", 3, 1, 1, 2, 3,"FERME");
 
 
 INSERT INTO AnnexeCommande (annexeId, commandeId)

@@ -9,19 +9,33 @@ namespace Projet_applications
     public class Database
     {
         public SQLiteConnection myConnection;
-
+        private static Database currentInstance;
+        private static string path = "../../../database.db";
         public Database()
         {
             try
             {
-                myConnection = new SQLiteConnection("Data Source=database.db");
+                if (File.Exists(path))
+                {
+                    myConnection = new SQLiteConnection("Data Source="+path);
+                }
+                else
+                {
+                    SQLiteConnection.CreateFile(path);
+                    myConnection = new SQLiteConnection("Data Source="+path);
+                    myConnection.Open();
+                    string query = File.ReadAllText("../../../database.sql");
+                    SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
+                    myCommand.ExecuteNonQuery();
+                }
+                
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
             }
         }
-        
 
         public SQLiteDataReader Select(string query)
         {
@@ -46,6 +60,13 @@ namespace Projet_applications
             string query = File.ReadAllText("../../../seed.sql");
             SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
             myCommand.ExecuteNonQuery();
+        }
+
+
+        public static Database getInstance()
+        {
+            if (currentInstance == null) return new Database();
+            else return currentInstance;
         }
     }
 }

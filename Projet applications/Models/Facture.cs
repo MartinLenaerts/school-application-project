@@ -6,11 +6,10 @@ namespace Projet_applications
     {
         public int Id { get; set; }
         public double Prix { get; set; }
-        public Commande Commande { get; set; }
-        
-        public void AjouterPrixFacture(float prix)
+
+        public override string ToString()
         {
-            Console.WriteLine("Le prix de votre pizza est de" + prix + "euros");
+            return "Facture n°" + Id + " : " + Prix + " € ";
         }
     }
 }

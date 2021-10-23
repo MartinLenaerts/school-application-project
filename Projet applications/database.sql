@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS Commande
     id          integer PRIMARY KEY AUTOINCREMENT,
     heure       TEXT,
     date        TEXT,
+    etat        TEXT,
     clientId    integer,
     factureId   integer DEFAULT NULL,
     commisId    integer,
