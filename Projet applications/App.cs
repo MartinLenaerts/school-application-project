@@ -285,12 +285,12 @@ namespace Projet_applications
                     string query1 = "SELECT id FROM Commande WHERE commisId =" + commisId;
                     SQLiteCommand myCommand1 = new SQLiteCommand(query1, Database.myConnection);
                     SQLiteDataReader requete1 = myCommand1.ExecuteReader();
-                    if (!requete1.HasRows) Console.WriteLine("Aucun commis avec cet id");
+                    if (!requete1.HasRows) Console.WriteLine("Aucun commis avec cet id\n\n\n");
                     for (int i =1;  requete1.Read(); i++)
                     {
                         nbCommandes = i;
                     }
-                    Console.WriteLine("Ce commis est lié à" + nbCommandes + "commandes");
+                    Console.WriteLine("Ce commis est lié à" + nbCommandes + "commandes\n\n\n");
                     break;
                 case 2:
                     int livreurId;
@@ -300,15 +300,15 @@ namespace Projet_applications
                     string query2 = "SELECT id FROM Commande WHERE livreurId =" + livreurId;
                     SQLiteCommand myCommand2 = new SQLiteCommand(query2, Database.myConnection);
                     SQLiteDataReader requete2 = myCommand2.ExecuteReader();
-                    if (!requete2.HasRows) Console.WriteLine("Aucun commis avec cet id");
+                    if (!requete2.HasRows) Console.WriteLine("Aucun commis avec cet id\n\n\n");
                     for (int i = 1; requete2.Read(); i++)
                     {
                         nbLivraisons = i;
                     }
-                    Console.WriteLine("Ce livreur est lié à" + nbLivraisons + "commandes");
+                    Console.WriteLine("Ce livreur est lié à" + nbLivraisons + "commandes\n\n\n");
                     break;
                 case 3:
-                    string query3 = "";
+                    string query3 = "SELECT * FROM Commande WHERE date = strftime('%d-%m-%Y %H:%M:%S', '2012-09-13 12:44:22')";
                     SQLiteCommand myCommand3 = new SQLiteCommand(query3, Database.myConnection);
                     SQLiteDataReader requete3 = myCommand3.ExecuteReader();
                     break;
@@ -321,10 +321,10 @@ namespace Projet_applications
                     {
                         avgCommandes = requete4.GetFloat(0);
                     }
-                    Console.WriteLine("La moyenne des prix des commandes est :" + avgCommandes + "euros");
+                    Console.WriteLine("La moyenne des prix des commandes est :" + avgCommandes + "euros\n\n\n");
                     break;
                 case 5:
-                    string query5 = "";
+                    string query5 = "SELECT ";
                     SQLiteCommand myCommand5 = new SQLiteCommand(query5, Database.myConnection);
                     SQLiteDataReader requete5 = myCommand5.ExecuteReader();
                     break;
