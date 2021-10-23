@@ -8361,7 +8361,7 @@
 						}
 					],
 					"isAbstract": true
-<<<<<<< HEAD
+
 				},
 				{
 					"_type": "UMLClass",
@@ -8405,8 +8405,7 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "Observer"
-=======
->>>>>>> Database
+
 				}
 			]
 		}
