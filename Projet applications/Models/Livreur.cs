@@ -1,41 +1,43 @@
 using System;
+using System.Threading;
+
 
 namespace Projet_applications
 {
     public class Livreur : Employee
     {
-        public Annexe AjouterAnnexe()
+        public void prendreCommande()
         {
-            // TODO implement here
+            CurrentCommande.Etat = Etat.Livraison;
+        }
+
+        public Annexe AjouterAnnexe(Annexe annexe)
+        {
+            CurrentCommande.Annexe.Add(annexe);
             return null;
         }
+
 
         public void EffectuerLivraison()
         {
-            // TODO implement here
+            Console.WriteLine("Livraison en cours");
+            Thread.Sleep(5000);
+            Console.WriteLine("Livraison arrivée à destination");
         }
 
-
-        public String EnvoyerConfirmation()
+        public void EnvoyerConfirmation()
         {
-            // TODO implement here
-            return null;
+            Console.WriteLine("Pizza livrée au client");
         }
-
-
-        /*  public ListPizza prendrePizza() {
-              // TODO implement here
-              return null;
-          }*/
 
         public void RecevoirPaiement()
         {
-            // TODO implement here
+            //CurrentCommande.Facture.Prix = 
         }
 
         public void RecupererFacture()
         {
-            // TODO implement here
+
         }
     }
 

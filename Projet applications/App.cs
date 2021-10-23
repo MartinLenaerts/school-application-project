@@ -20,6 +20,7 @@ namespace Projet_applications
 
         public void Start()
         {
+
             Database.Open();
             Database.Seed();
 
