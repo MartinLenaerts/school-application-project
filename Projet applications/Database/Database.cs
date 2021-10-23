@@ -14,7 +14,7 @@ namespace Projet_applications
         {
             try
             {
-                myConnection = new SQLiteConnection("Data Source=database.sqlite3");
+                myConnection = new SQLiteConnection("Data Source=database.db");
             }
             catch (Exception e)
             {
@@ -38,6 +38,14 @@ namespace Projet_applications
         public void Close()
         {
             myConnection.Close();
+        }
+
+
+        public void Seed()
+        {
+            string query = File.ReadAllText("../../../seed.sql");
+            SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
+            myCommand.ExecuteNonQuery();
         }
     }
 }

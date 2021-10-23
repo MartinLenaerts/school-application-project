@@ -14,18 +14,21 @@ namespace Projet_applications
         public string Prenom { get; set; }
 
         public int Telephone { get; set; }
+        public string DateFirst { get; set; }
+        public Adresse Adresse { get; set; }
 
-        public Adresse adresse;
-
-        public Client(int id, string nom, string prenom, String rue, String ville, int numRue, int telephone)
+        public override string ToString()
         {
-            Id = id;
-            Nom = nom;
-            Prenom = prenom;
-            adresse.Rue = rue;
-            adresse.Ville = ville;
-            adresse.NumRue = numRue;
-            Telephone = telephone;
+            string res = "";
+            if (Id != 0) res += "CLient n° : " + Id + "\r\n";
+            if (!(Nom is null)) res += "           Nom : " + Nom + "\r\n";
+            if (!(Prenom is null)) res += "           Prenom : " + Prenom + "\r\n";
+            if (Telephone != 0) res += "           Telephone : " + Telephone + "\r\n";
+            if (!(DateFirst is null)) res += "           DateFirst : " + DateFirst + "\r\n;";
+            if (!(Adresse is null))
+                res += "           Adresse : " + Adresse.NumRue + " rue " + Adresse.Rue + " " + Adresse.Ville;
+
+            return res;
         }
     }
 }
