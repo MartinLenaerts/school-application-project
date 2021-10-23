@@ -7,7 +7,7 @@ namespace Projet_applications
     {
         static void Main(string[] args)
         {
-            App app = new App(Database );
+            App app = new App(){Database = new Database()};
             app.Start();
             
         }
