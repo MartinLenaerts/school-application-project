@@ -192,12 +192,70 @@ namespace Projet_applications
 
         public void StatistiquesManagement()
         {
+            int choixStats;
+            
             Console.WriteLine("Entrez : ");
             CustomConsole.PrintChoice(1, "Afficher par commis, le nombre de commandes gerees");
             CustomConsole.PrintChoice(2, "Afficher par livreur le nombre de livraisons effectuees ");
             CustomConsole.PrintChoice(3, "Afficher les commandes selon une periode de temps ");
-            CustomConsole.PrintChoice(2, "Afficher la moyenne des prix des commandes");
-            CustomConsole.PrintChoice(3, "Afficher la moyenne des comptes clients");
+            CustomConsole.PrintChoice(4, "Afficher la moyenne des prix des commandes");
+            CustomConsole.PrintChoice(5, "Afficher la moyenne des comptes clients");
+            choixStats = Convert.ToInt32(Console.ReadLine());
+
+            switch (choixStats)
+            {
+                case 1:
+                    int commisId;
+                    int nbCommandes = 0;
+                    Console.WriteLine("Quel est l'id du commis dont vous voulez connaitre les commandes?");
+                    commisId = Convert.ToInt32(Console.ReadLine());
+                    string query1 = "SELECT id FROM Commande WHERE commisId =" + commisId;
+                    SQLiteCommand myCommand1 = new SQLiteCommand(query1, Database.myConnection);
+                    SQLiteDataReader requete1 = myCommand1.ExecuteReader();
+                    if (!requete1.HasRows) Console.WriteLine("Aucun commis avec cet id\n\n\n");
+                    for (int i =1;  requete1.Read(); i++)
+                    {
+                        nbCommandes = i;
+                    }
+                    Console.WriteLine("Ce commis est lié à" + nbCommandes + "commandes\n\n\n");
+                    break;
+                case 2:
+                    int livreurId;
+                    int nbLivraisons = 0;
+                    Console.WriteLine("Quel est l'id du livreur dont vous voulez connaitre les livraisons?");
+                    livreurId = Convert.ToInt32(Console.ReadLine());
+                    string query2 = "SELECT id FROM Commande WHERE livreurId =" + livreurId;
+                    SQLiteCommand myCommand2 = new SQLiteCommand(query2, Database.myConnection);
+                    SQLiteDataReader requete2 = myCommand2.ExecuteReader();
+                    if (!requete2.HasRows) Console.WriteLine("Aucun commis avec cet id\n\n\n");
+                    for (int i = 1; requete2.Read(); i++)
+                    {
+                        nbLivraisons = i;
+                    }
+                    Console.WriteLine("Ce livreur est lié à" + nbLivraisons + "commandes\n\n\n");
+                    break;
+                case 3:
+                    string query3 = "SELECT * FROM Commande WHERE date = strftime('%d-%m-%Y %H:%M:%S', '2012-09-13 12:44:22')";
+                    SQLiteCommand myCommand3 = new SQLiteCommand(query3, Database.myConnection);
+                    SQLiteDataReader requete3 = myCommand3.ExecuteReader();
+                    break;
+                case 4:
+                    float avgCommandes =0;
+                    string query4 = "SELECT AVG(prix) FROM Facture";
+                    SQLiteCommand myCommand4 = new SQLiteCommand(query4, Database.myConnection);
+                    SQLiteDataReader requete4 = myCommand4.ExecuteReader();
+                    while (requete4.Read())
+                    {
+                        avgCommandes = requete4.GetFloat(0);
+                    }
+                    Console.WriteLine("La moyenne des prix des commandes est :" + avgCommandes + "euros\n\n\n");
+                    break;
+                case 5:
+                    string query5 = "SELECT ";
+                    SQLiteCommand myCommand5 = new SQLiteCommand(query5, Database.myConnection);
+                    SQLiteDataReader requete5 = myCommand5.ExecuteReader();
+                    break;
+            }
         }
     }
 }

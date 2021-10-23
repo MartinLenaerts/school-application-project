@@ -18,8 +18,8 @@ namespace Projet_applications
             Console.WriteLine(msg);
             Console.ResetColor();
         }
-        
-        
+
+
         public static void PrintChoice(int number,string msg)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
