@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Data.SQLite;
 using Projet_applications;
@@ -223,30 +224,70 @@ namespace Projet_applications
             }
         }
 
-        /*public void AjouterPrixFacture(int id, Facture facture)
+        public List<String> GetClients(Database databaseObject)
         {
-    
-            switch (type)
+            databaseObject.myConnection.Open();
+            List<String> entries = new List<string>();
+            String query = "select * from Client";
+
+            SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
+
+
+            SQLiteDataReader requete = myCommand.ExecuteReader();
+
+            while (requete.Read())
             {
-                case 1:
-                    switch (taille)
-                    {
-                        case 1:
-                            String query = "select id from Pizzas where nom = 'quatreFromages' and taille = 'petite'";
-                            SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
-                            databaseObject.myConnection.Open();
-                            facture.setPrix();
-                            prix = myCommand.ExecuteNonQuery();
-                            databaseObject.myConnection.Close();
-                            break;
-    
-    
-                    }
-                    break;
+                entries.Add($"{requete.GetInt32(0)} {requete.GetString(1)} {requete.GetString(2)}");
             }
+
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                Console.WriteLine(entries[i]);
+            }
+
+
+            return entries;
+        }
+
+        public void GetClientsByCity(Database databaseObject)
+        {
+            databaseObject.myConnection.Open();
+            String query = "select * from Client order by ville";
+            SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
+            SQLiteDataReader rdr = myCommand.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)} {rdr.GetString(2)} {rdr.GetString(3)}");
+            }
+
+            databaseObject.myConnection.Close();
+        }
+
+        public Adresse trouverAdresse(Database databaseObject)
+        {
+            Adresse adresse = new Adresse();
+            double tel = 0;
+            Console.WriteLine("Saisissez le numero de telephone a partir duquel retrouver l'adresse");
+            tel = double.Parse(Console.ReadLine());
+
+            String rue = null;
+            databaseObject.myConnection.Open();
+            String query = "select rue, numeroRue, ville from Client where telephone =  " + tel;
+            SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
+            SQLiteDataReader rdr = myCommand.ExecuteReader();
+            bool rez = rdr.Read();
+            Console.WriteLine(rez);
+            adresse.Rue = Convert.ToString(rdr["rue"]);
+            adresse.NumRue = Convert.ToInt32(rdr["numeroRue"]);
+            adresse.Ville = Convert.ToString(rdr["ville"]);
+            databaseObject.myConnection.Close();
+            return adresse;
+        }
+
+        /*nom = "quatreFromage";
     
-            Console.WriteLine("type" + type + "taille" + taille + ", cela vous fera un total de" + prix + "�");
-    
-        }*/
+        string requete = "Select id from Pizzas where nom = " + nom + "and taille = " + taille;*/
     }
 }
