@@ -7,6 +7,8 @@ namespace Projet_applications
         public Taille taille { get; set; }
         public Type type { get; set; }
 
+        public int prix { get; set; }
+
         public void GetPrix()
         {
             // TODO implement here

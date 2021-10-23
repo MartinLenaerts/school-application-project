@@ -21,7 +21,7 @@ namespace Projet_applications
                 Console.WriteLine(e.Message);
             }
         }
-
+        
 
         public SQLiteDataReader Select(string query)
         {
