@@ -12,7 +12,6 @@ namespace Projet_applications
             {
                 app.Start();
             }
-
             CustomConsole.PrintSuccess("Au revoir !");
         }
     }

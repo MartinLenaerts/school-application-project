@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 
 namespace Projet_applications
@@ -8,16 +9,16 @@ namespace Projet_applications
     {
         public void PrendreCommande()
         {
-            Console.WriteLine("Récupération de la commande");
-            CurrentCommande.Etat = Etat.Livraison;
+            Console.WriteLine("Récupération de la commande n°" + CurrentCommande.Id);
+            CurrentCommande.Etat = Etat.Pret;
         }
 
-        public void EffectuerLivraison(Commande c)
+        public async void EffectuerLivraison()
         {
             Console.WriteLine("Livraison en cours");
-            Thread.Sleep(10000);
-            c.Etat = Etat.Ferme;
-            Console.WriteLine("Livraison arriv�e � destination");
+            await Task.Delay(10000);
+            CurrentCommande.Etat = Etat.Ferme;
+            Console.WriteLine("Livraison de la commande n°"+CurrentCommande.Id + " effectuée");
         }
     }
 }

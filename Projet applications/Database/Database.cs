@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Design;
+using System.Data;
 using System.IO;
 using System.Data.SQLite;
 
@@ -23,7 +24,6 @@ namespace Projet_applications
                 {
                     SQLiteConnection.CreateFile(path);
                     myConnection = new SQLiteConnection("Data Source="+path);
-                    myConnection.Open();
                     string query = File.ReadAllText("../../../database.sql");
                     SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
                     myCommand.ExecuteNonQuery();
@@ -45,13 +45,13 @@ namespace Projet_applications
         
         public void Open()
         {
-            myConnection.Open();
+            if(myConnection.State != ConnectionState.Open)myConnection.Open();
         }
         
         
         public void Close()
         {
-            myConnection.Close();
+            if(myConnection.State != ConnectionState.Closed)myConnection.Close();
         }
 
 
@@ -65,8 +65,9 @@ namespace Projet_applications
 
         public static Database getInstance()
         {
-            if (currentInstance == null) return new Database();
-            else return currentInstance;
+            if (currentInstance == null) currentInstance = new Database();
+
+            return currentInstance;
         }
     }
 }

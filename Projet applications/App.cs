@@ -1,13 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity.Core.Common.CommandTrees;
-using System.Data.Entity.Infrastructure.Interception;
-using System.Data.SqlClient;
 using System.Data.SQLite;
-using System.IO;
-using System.Linq;
-using Microsoft.Data.Sqlite;
 
 namespace Projet_applications
 {
@@ -23,13 +15,13 @@ namespace Projet_applications
 
         public void Start()
         {
+            Database.Open();
             if (!hasSeeding)
             {
                 Database.Seed();
                 hasSeeding = true;
             }
-
-
+            
             if (CurrentCommis == null)
             {
                 Begin:
@@ -96,8 +88,6 @@ namespace Projet_applications
                 CustomConsole.PrintError(e.Message);
                 goto Menu;
             }
-
-            Database.Close();
         }
 
 
@@ -165,7 +155,6 @@ namespace Projet_applications
             Console.WriteLine("Entrez : ");
             CustomConsole.PrintChoice(1, "creer une nouvelle commande");
             CustomConsole.PrintChoice(2, "afficher une commande");
-            CustomConsole.PrintChoice(3, "modifier une commande");
             CustomConsole.PrintChoice(9, "pour quitter");
             try
             {
@@ -185,9 +174,6 @@ namespace Projet_applications
                     case 2:
                         CurrentCommis.AfficherCommande(Database);
                         goto Begin;
-                    case 3:
-                        SetCommand();
-                        break;
                     case 9:
                         break;
                     default:
@@ -197,70 +183,12 @@ namespace Projet_applications
             catch (Exception e)
             {
                 CustomConsole.PrintError(e.Message);
+                CustomConsole.PrintError(e.StackTrace);
                 goto Begin;
             }
         }
 
-        public void SetCommand()
-        {
-            Begin:
-            Console.Write("Entrez le numero de la commande : ");
-            string stringIdCommande = Console.ReadLine();
-            int idCommande;
-            if (!Int32.TryParse(stringIdCommande, out idCommande))
-            {
-                CustomConsole.PrintError("Veuillez entrer un numero valide");
-                goto Begin;
-            }
-
-            string query = "SELECT * FROM Commande WHERE id=" + idCommande;
-            SQLiteCommand myCommand = new SQLiteCommand(query, Database.myConnection);
-            SQLiteDataReader requete = myCommand.ExecuteReader();
-            if (!requete.HasRows)
-            {
-                CustomConsole.PrintError("Aucune commande avec ce numero");
-                goto Begin;
-            }
-
-            requete.Read();
-            CurrentCommis.CurrentCommande = new Commande() {Id = Int32.Parse("" + requete.GetValue(0))};
-
-            BeginSet:
-            Console.WriteLine("Entrez : ");
-            CustomConsole.PrintChoice(1, "Ajouter des pizzas");
-            CustomConsole.PrintChoice(2, "Ajouter des Annexes");
-            CustomConsole.PrintChoice(9, "Pour quitter");
-
-            string stringChoice = Console.ReadLine();
-            int choice;
-            if (!Int32.TryParse(stringChoice, out choice))
-            {
-                CustomConsole.PrintError("Veuillez entrer un numero valide");
-                goto BeginSet;
-            }
-
-            try
-            {
-                switch (choice)
-                {
-                    case 1:
-                        CurrentCommis.AjouterPizzaCommande(Database);
-                        goto BeginSet;
-                    case 2:
-                        CurrentCommis.AjouterAnnexe(Database);
-                        goto BeginSet;
-                    case 9:
-                        break;
-                    default:
-                        goto BeginSet;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                goto BeginSet;
-            }
-        }
+        
 
         public void StatistiquesManagement()
         {

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
+using System.Xml.Linq;
 
 namespace Projet_applications
 {
@@ -23,14 +25,79 @@ namespace Projet_applications
             set
             {
                 _etat = value;
-                if (value == Etat.Preparation) Cuisinier.PreparerCommande(this);
-                if (value == Etat.Livraison) Livreur.PrendreCommande();
-                if (value == Etat.Ferme) Console.WriteLine("Commande terminée");
+                Database db = Database.getInstance();
+                db.Open();
+                if (value == Etat.Preparation)
+                {
+                    string query = "SELECT * FROM Employee WHERE type = 'cuisinier'";
+                    SQLiteCommand commande = new SQLiteCommand(query, db.myConnection);
+                    commande.CommandTimeout = 60;
+                    SQLiteDataReader r = commande.ExecuteReader();
+                    if (!r.HasRows) return;
+                    r.Read();
+                    Cuisinier = new Cuisinier()
+                    {
+                        Id = Int32.Parse("" + r.GetValue(0)),
+                        Nom = (string) r.GetValue(1),
+                        Prenom = (string) r.GetValue(2)
+                    };
+                    Cuisinier.CurrentCommande = this;
+                    string updateCommande = "UPDATE Commande SET cuisinierId = " + Cuisinier.Id +
+                                            " , etat = 'Preparation' WHERE id="+Id;
+                    int coutnRow = new SQLiteCommand(updateCommande, db.myConnection).ExecuteNonQuery();
+                    Cuisinier.PreparerCommande();
+                }
+
+                if (value == Etat.Pret)
+                {
+                    string query = "SELECT * FROM Employee WHERE type = 'livreur'";
+                    SQLiteDataReader r = new SQLiteCommand(query, db.myConnection).ExecuteReader();
+                    if (!r.HasRows) return;
+
+                    r.Read();
+                    Livreur = new Livreur()
+                    {
+                        Id = Int32.Parse("" + r.GetValue(0)),
+                        Nom = (string) r.GetValue(1),
+                        Prenom = (string) r.GetValue(2)
+                    };
+                    
+                    Livreur.CurrentCommande = this;
+                    string updateCommande =
+                        "UPDATE Commande SET livreurId = " + Livreur.Id + " , etat = 'Pret' WHERE id="+Id;
+                    int coutnRow = new SQLiteCommand(updateCommande, db.myConnection).ExecuteNonQuery();
+                    Console.WriteLine("yesy");
+                    Livreur.PrendreCommande();
+                }
+
+                if (value == Etat.Livraison)
+                {
+                    string query = "SELECT * FROM Employee WHERE type = 'livreur'";
+                    SQLiteDataReader r = new SQLiteCommand(query, db.myConnection).ExecuteReader();
+                    if (!r.HasRows) return;
+
+                    r.Read();
+                    Livreur = new Livreur()
+                    {
+                        Id = Int32.Parse("" + r.GetValue(0)),
+                        Nom = (string) r.GetValue(1),
+                        Prenom = (string) r.GetValue(2)
+                    };
+                    Livreur.CurrentCommande = this;
+                    string updateCommande =
+                        "UPDATE Commande SET livreurId = " + Livreur.Id + " , etat = 'Livraison' WHERE id="+Id;
+                    int coutnRow = new SQLiteCommand(updateCommande, db.myConnection).ExecuteNonQuery();
+                    Livreur.EffectuerLivraison();
+                }
+
+                if (value == Etat.Ferme)
+                {
+                    string updateCommande = "UPDATE Commande SET etat = 'Ferme' WHERE id="+Id;
+                    int coutnRow = new SQLiteCommand(updateCommande, db.myConnection).ExecuteNonQuery();
+                    Console.WriteLine("Commande n°"+Id + " fermée");
+                }
             }
         }
-
-        private Pizza _lastPizzaAdded;
-        
         public void GenerateFacture()
         {
             // TODO implement here
@@ -42,6 +109,7 @@ namespace Projet_applications
             DateHeure = "" + now.Hour + "h" + now.Hour + " " + now.Day + "/" + now.Month + "/" + now.Year;
             Pizza = new List<Pizza>();
             Annexe = new List<Annexe>();
+            Facture = new Facture();
         }
 
         public override string ToString()
@@ -70,11 +138,5 @@ namespace Projet_applications
         }
 
 
-        public void AddPizza(Pizza pizza)
-        {
-            _lastPizzaAdded = pizza;
-                Etat = Etat.Preparation;
-            Pizza.Add(pizza);
-        }
     }
 }

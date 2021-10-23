@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Diagnostics.SymbolStore;
 using Projet_applications;
 
 namespace Projet_applications
@@ -71,7 +72,6 @@ namespace Projet_applications
 
         public void CreerCommande(Database database)
         {
-            database.Open();
             Console.WriteLine("Entrez le numero de telephone du client : ");
             string tel = Console.ReadLine();
             String query = "SELECT * FROM client where telephone=" + Int32.Parse(tel);
@@ -116,11 +116,58 @@ namespace Projet_applications
                 CurrentCommande.Client.Id + ", " + Id + ", null, null)";
             SQLiteCommand commandPizza = new SQLiteCommand(insertCommand, database.myConnection);
             int countRowCommande = commandPizza.ExecuteNonQuery();
-
+            CurrentCommande.Id = Int32.Parse("" + database.myConnection.LastInsertRowId);
             if (countRowCommande > 0)
                 CustomConsole.PrintSuccess("Commande n° " + database.myConnection.LastInsertRowId + " créée ! ");
             else CustomConsole.PrintError("Commande non ajoutée ");
+
+            bool commandeValide = false;
+            while (!commandeValide)
+            {
+                BeginSet:
+                Console.WriteLine("Entrez : ");
+                CustomConsole.PrintChoice(1, "Ajouter des pizzas");
+                CustomConsole.PrintChoice(2, "Ajouter des Annexes");
+                CustomConsole.PrintChoice(3, "Valider la commande en cours");
+                CustomConsole.PrintChoice(9, "Pour quitter");
+
+                string stringChoice = Console.ReadLine();
+                int choice;
+                if (!Int32.TryParse(stringChoice, out choice))
+                {
+                    CustomConsole.PrintError("Veuillez entrer un numero valide");
+                    goto BeginSet;
+                }
+
+                try
+                {
+                    switch (choice)
+                    {
+                        case 1:
+                            AjouterPizzaCommande(database);
+                            goto BeginSet;
+                        case 2:
+                            AjouterAnnexe(database);
+                            goto BeginSet;
+                        case 3:
+                            commandeValide = true;
+                            break;
+                        case 9:
+                            break;
+                        default:
+                            goto BeginSet;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    goto BeginSet;
+                }
+            }
+
+            CurrentCommande.Etat = Etat.Preparation;
         }
+
 
         public Client AjouterClient(Database databaseObject)
         {
@@ -260,7 +307,6 @@ namespace Projet_applications
             }
 
             string queryId = "select id , prix from Pizza where nom LIKE '" + nom + "' and taille LIKE'" + taille + "'";
-            Console.WriteLine(queryId);
             SQLiteCommand idCommand = new SQLiteCommand(queryId, databaseObject.myConnection);
             SQLiteDataReader readerId = idCommand.ExecuteReader();
             while (readerId.Read())
@@ -274,16 +320,18 @@ namespace Projet_applications
 
             Pizza pizza = new Pizza() {Id = id, taille = taillePizza, type = nomPizza};
 
-            CurrentCommande.AddPizza(pizza);
+            CurrentCommande.Pizza.Add(pizza);
 
             string insertPizza = "Insert into PizzaCommande (pizzaId,commandeId) VALUES (" + id + " , " +
                                  CurrentCommande.Id + ")";
             string insertFacture = "UPDATE facture SET prix = prix + " + prix;
             SQLiteCommand commandPizza = new SQLiteCommand(insertPizza, databaseObject.myConnection);
             SQLiteCommand commandFacture = new SQLiteCommand(insertFacture, databaseObject.myConnection);
-            commandPizza.ExecuteNonQuery();
+            int count = commandPizza.ExecuteNonQuery();
             commandFacture.ExecuteNonQuery();
             CurrentCommande.Facture.Prix += prix;
+            if (count > 0) CustomConsole.PrintSuccess("Pizza ajoutée ! ");
+            else CustomConsole.PrintError("erreur ");
         }
 
         public void GetClients(Database databaseObject)
@@ -407,38 +455,39 @@ namespace Projet_applications
             }
 
             String query =
-                "SELECT c.id , heure , 'date', cl.nom , cl.prenom , cl.id , p.nom , a.nom , f.id , f.prix " +
-                "FROM Commande c, Client cl , Annexe a , Pizza p , AnnexeCommande ac , PizzaCommande pc , Facture f " +
-                "WHERE c.id=ac.commandeId AND c.factureId=f.id AND a.id=ac.annexeId AND c.id=pc.commandeId AND p.id=pc.pizzaId AND c.id=cl.id AND c.id=" +
-                idCommand;
+                "SELECT c.id , heure , 'date', cl.nom , cl.prenom , cl.id ,  f.id , f.prix FROM Commande c INNER JOIN Client cl on cl.id = c.clientId INNER JOIN Facture F on F.id = c.factureId WHERE c.id=" + idCommand;
             Console.WriteLine(query);
             SQLiteCommand myCommand = new SQLiteCommand(query, database.myConnection);
             SQLiteDataReader requete = myCommand.ExecuteReader();
             if (!requete.HasRows) CustomConsole.PrintError("Aucune commande correspondant à  ce numero " + idCommand);
-            Commande c = null;
-            while (requete.Read())
+            requete.Read();
+            Commande c = new Commande()
             {
-                if (c is null)
+                Id = Int32.Parse("" + requete.GetValue(0)),
+                DateHeure = (string) requete.GetValue(1) + " " + (string) requete.GetValue(2),
+                Client = new Client()
                 {
-                    c = new Commande()
-                    {
-                        Id = Int32.Parse("" + requete.GetValue(0)),
-                        DateHeure = (string) requete.GetValue(1) + " " + (string) requete.GetValue(2),
-                        Client = new Client()
-                        {
-                            Id = Int32.Parse("" + requete.GetValue(5)),
-                            Nom = (string) requete.GetValue(3),
-                            Prenom = (string) requete.GetValue(4),
-                        },
-                        Facture = new Facture()
-                            {Id = Int32.Parse("" + requete.GetValue(8)), Prix = Double.Parse("" + requete.GetValue(9))},
-                        Pizza = new List<Pizza>(),
-                        Annexe = new List<Annexe>(),
-                    };
-                }
+                    Id = Int32.Parse("" + requete.GetValue(5)),
+                    Nom = (string) requete.GetValue(3),
+                    Prenom = (string) requete.GetValue(4),
+                },
+                Facture = new Facture()
+                    {Id = Int32.Parse("" + requete.GetValue(6)), Prix = Double.Parse("" + requete.GetValue(7))}
+            };
 
-                c.Pizza.Add(new Pizza() {Nom = (string) requete.GetValue(6)});
-                c.Annexe.Add(new Annexe() {Nom = (string) requete.GetValue(7)});
+            String getA = "SELECT a.nom FROM AnnexeCommande c , Annexe a  WHERE c.annexeId=a.id AND c.commandeId=" +
+                          c.Id;
+            SQLiteDataReader requeteA = new SQLiteCommand(getA, database.myConnection).ExecuteReader();
+            while (requeteA.Read())
+            {
+                c.Annexe.Add(new Annexe() {Nom = ""+requeteA.GetValue(0)});
+            }
+
+            String getP = "SELECT  a.nom FROM PizzaCommande c , Pizza a  WHERE c.pizzaId=a.id AND c.commandeId=" + c.Id;
+            SQLiteDataReader requeteP = new SQLiteCommand(getP, database.myConnection).ExecuteReader();
+            while (requeteP.Read())
+            {
+                c.Pizza.Add(new Pizza() {Nom = (string) requeteP.GetValue(0)});
             }
 
             Console.WriteLine(c);
@@ -446,7 +495,43 @@ namespace Projet_applications
 
         public void AjouterAnnexe(Database database)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Quelle boisson voulez vous ?\r");
+            CustomConsole.PrintChoice(1, "coca");
+            CustomConsole.PrintChoice(2, "fanta");
+            CustomConsole.PrintChoice(3, "orangina");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            string nom = "";
+            switch (choice)
+            {
+                case 1:
+                    nom = "coca";
+                    break;
+                case 2:
+                    nom = "fanta";
+                    break;
+                case 3:
+                    nom = "orangina";
+                    break;
+            }
+
+            string queryId = "select * from Annexe where nom LIKE '" + nom + "'";
+            SQLiteCommand idCommand = new SQLiteCommand(queryId, database.myConnection);
+            SQLiteDataReader readerId = idCommand.ExecuteReader();
+            readerId.Read();
+            int id = Int32.Parse("" + readerId.GetValue(0));
+            CurrentCommande.Annexe.Add(new Annexe()
+            {
+                Nom = nom,
+                Id = id,
+            });
+
+
+            string insertAssoc = "Insert into AnnexeCommande (commandeId,annexeId) VALUES (" + CurrentCommande.Id +
+                                 " , " +
+                                 id + ")";
+            int count = new SQLiteCommand(insertAssoc, database.myConnection).ExecuteNonQuery();
+            if (count > 0) CustomConsole.PrintSuccess("Annexe ajoutée ! ");
+            else CustomConsole.PrintError("erreur ");
         }
     }
 }
