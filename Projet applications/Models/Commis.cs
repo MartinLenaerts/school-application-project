@@ -1,6 +1,6 @@
+
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
 using System.Data.SQLite;
 using Projet_applications;
 
@@ -8,6 +8,10 @@ namespace Projet_applications
 {
     public class Commis : Employee
     {
+        public Commis(int id, string nom, string prenom) : base(id, nom, prenom)
+        {
+        }
+
         public String MsgClient()
         {
             // TODO implement here
@@ -128,15 +132,17 @@ namespace Projet_applications
 
             databaseObject.myConnection.Close();
             Console.WriteLine("Rows added : {0}", result);
+
         }
 
         public void AjouterPizzaCommande(Database databaseObject)
         {
-            int id;
+            int id = 0;
+            float prix = 0;
             int choixNom;
             int choixTaille;
-            string nom;
-            string taille;
+            string nom = "";
+            string taille = "";
 
 
             Console.WriteLine("Quelle type de pizza desirez-vous ?\r");
@@ -160,19 +166,6 @@ namespace Projet_applications
                         case 1:
                             nom = "quatreFromages";
                             taille = "petite";
-                            String query = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" +
-                                           taille + "\"";
-                            SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
-                            databaseObject.myConnection.Open();
-                            SQLiteDataReader reader = myCommand.ExecuteReader();
-                            while (reader.Read())
-                            {
-                                Console.WriteLine($"{reader.GetInt32(0)}");
-                                id = reader.GetInt32(0);
-                                Console.WriteLine("id=" + id);
-                            }
-
-                            databaseObject.myConnection.Close();
                             break;
                         case 2:
                             nom = "quatreFromages";
@@ -221,7 +214,37 @@ namespace Projet_applications
                     }
 
                     break;
+
             }
+            string queryId = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
+            SQLiteCommand idCommand = new SQLiteCommand(queryId, databaseObject.myConnection);
+            databaseObject.myConnection.Open();
+            SQLiteDataReader readerId = idCommand.ExecuteReader();
+            while (readerId.Read())
+            {
+                id = readerId.GetInt32(0);
+            }
+
+            string queryPrix = "select prix from Pizzas where id = " + id;
+            SQLiteCommand prixCommand = new SQLiteCommand(queryPrix, databaseObject.myConnection);
+            SQLiteDataReader readerPrix = prixCommand.ExecuteReader();
+            while (readerPrix.Read())
+            {
+                prix = readerPrix.GetInt32(0);
+            }
+            databaseObject.myConnection.Close();
+            Console.WriteLine("id=" + id);
+
+            PizzaType nomPizza = (PizzaType) Enum.Parse(typeof(PizzaType), nom);
+            Taille taillePizza = (Taille)Enum.Parse(typeof(PizzaType), nom);
+
+            Pizza pizza = new Pizza(id, nomPizza, taillePizza);
+
+            Commande commande = new Commande(1, DateTime.Now, pizza);
+
+            Facture facture = new Facture(1, prix);
+            facture.AjouterPrixFacture(prix);
+
         }
 
         public List<String> GetClients(Database databaseObject)
@@ -286,8 +309,5 @@ namespace Projet_applications
             return adresse;
         }
 
-        /*nom = "quatreFromage";
-    
-        string requete = "Select id from Pizzas where nom = " + nom + "and taille = " + taille;*/
     }
 }
