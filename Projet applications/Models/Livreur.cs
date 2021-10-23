@@ -6,39 +6,18 @@ namespace Projet_applications
 {
     public class Livreur : Employee
     {
-        public void prendreCommande()
+        public void PrendreCommande()
         {
+            Console.WriteLine("RÃ©cupÃ©ration de la commande");
             CurrentCommande.Etat = Etat.Livraison;
         }
 
-        public Annexe AjouterAnnexe(Annexe annexe)
-        {
-            CurrentCommande.Annexe.Add(annexe);
-            return null;
-        }
-
-
-        public void EffectuerLivraison()
+        public void EffectuerLivraison(Commande c)
         {
             Console.WriteLine("Livraison en cours");
-            Thread.Sleep(5000);
-            Console.WriteLine("Livraison arrivée à destination");
-        }
-
-        public void EnvoyerConfirmation()
-        {
-            Console.WriteLine("Pizza livrée au client");
-        }
-
-        public void RecevoirPaiement()
-        {
-            //CurrentCommande.Facture.Prix = 
-        }
-
-        public void RecupererFacture()
-        {
-
+            Thread.Sleep(10000);
+            c.Etat = Etat.Ferme;
+            Console.WriteLine("Livraison arrivï¿½e ï¿½ destination");
         }
     }
-
 }

@@ -7,9 +7,13 @@ namespace Projet_applications
     {
         static void Main(string[] args)
         {
-            App app = new App(){Database = new Database()};
-            app.Start();
-            
+            App app = new App() {Database = Database.getInstance(), Running = true};
+            while (app.Running)
+            {
+                app.Start();
+            }
+
+            CustomConsole.PrintSuccess("Au revoir !");
         }
     }
 }

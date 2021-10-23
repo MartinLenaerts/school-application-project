@@ -2,8 +2,8 @@ namespace Projet_applications
 {
     public enum Taille
     {
-        petite,
-        moyenne,
-        grande
+        Petite,
+        Moyenne,
+        Grande
     }
 }

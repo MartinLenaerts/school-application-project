@@ -71,18 +71,21 @@ namespace Projet_applications
 
         public void CreerCommande(Database database)
         {
+            database.Open();
             Console.WriteLine("Entrez le numero de telephone du client : ");
             string tel = Console.ReadLine();
-            String query = "SELECT * FROM client where telephone=" + tel;
+            String query = "SELECT * FROM client where telephone=" + Int32.Parse(tel);
             SQLiteCommand idCommand = new SQLiteCommand(query, database.myConnection);
             SQLiteDataReader reader = idCommand.ExecuteReader();
             CurrentCommande = new Commande();
             if (!reader.HasRows)
             {
+                Console.WriteLine("Client inexistant");
                 CurrentCommande.Client = AjouterClient(database);
             }
             else
             {
+                reader.Read();
                 CurrentCommande.Client = new Client()
                 {
                     Id = Int32.Parse("" + reader.GetValue(0)),
@@ -98,6 +101,25 @@ namespace Projet_applications
                     },
                 };
             }
+
+            string insertFacture = "INSERT INTO Facture (prix) VALUES (0)";
+            SQLiteCommand commandFacture = new SQLiteCommand(insertFacture, database.myConnection);
+            int countRowFacture = commandFacture.ExecuteNonQuery();
+            if (countRowFacture > 0)
+                CustomConsole.PrintSuccess("Facture n° " + database.myConnection.LastInsertRowId + " ajoutée ");
+            else CustomConsole.PrintError("Facture non ajoutée ");
+
+            string[] dateHeure = CurrentCommande.DateHeure.Split(" ");
+            string insertCommand =
+                "INSERT INTO Commande (heure, date, factureId, clientId, commisId, livreurId, cuisinierId) VALUES ('" +
+                dateHeure[0] + "','" + dateHeure[1] + "', " + database.myConnection.LastInsertRowId + ", " +
+                CurrentCommande.Client.Id + ", " + Id + ", null, null)";
+            SQLiteCommand commandPizza = new SQLiteCommand(insertCommand, database.myConnection);
+            int countRowCommande = commandPizza.ExecuteNonQuery();
+
+            if (countRowCommande > 0)
+                CustomConsole.PrintSuccess("Commande n° " + database.myConnection.LastInsertRowId + " créée ! ");
+            else CustomConsole.PrintError("Commande non ajoutée ");
         }
 
         public Client AjouterClient(Database databaseObject)
@@ -110,30 +132,27 @@ namespace Projet_applications
             int numRue;
             String rue;
 
-
-            Console.WriteLine("Saisissez un nom");
+            Console.Write("Saisissez un nom : ");
             nom = Console.ReadLine();
 
-            Console.WriteLine("Saisissez un prenom");
+            Console.Write("Saisissez un prenom : ");
             prenom = Console.ReadLine();
 
-            Console.WriteLine("Saisissez une ville");
+            Console.Write("Saisissez une ville : ");
             ville = Console.ReadLine();
 
-            Console.WriteLine("Saisissez un 06");
+            Console.Write("Saisissez un 06 : ");
             tel = double.Parse(Console.ReadLine());
 
 
-            Console.WriteLine("Saisissez un numero de rue");
+            Console.Write("Saisissez un numero de rue : ");
             numRue = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Saisissez une rue");
+            Console.Write("Saisissez une rue : ");
             rue = Console.ReadLine();
 
-            date = new DateTime().ToString();
-
-            Console.WriteLine("nom" + nom + "prenom" + prenom + "ville" + ville + "tel" + tel + "date" + date +
-                              "numero de la rue" + numRue + "rue" + rue);
+            DateTime now = DateTime.Now;
+            date = "" + now.Hour + "h" + now.Hour + " " + now.Day + "/" + now.Month + "/" + now.Year;
 
             String query =
                 "insert into Client ('nom','prenom','ville','telephone','dateFirst','numeroRue','rue') values (@nom,@prenom,@ville,@telephone,@dateFirst,@numeroRue,@rue)";
@@ -148,14 +167,14 @@ namespace Projet_applications
             myCommand.Parameters.AddWithValue("@numeroRue", numRue);
             myCommand.Parameters.AddWithValue("@rue", rue);
             var result = myCommand.ExecuteNonQuery();
-
-            databaseObject.myConnection.Close();
-            Console.WriteLine("Rows added : {0}", result);
+            int idClient = (int) databaseObject.myConnection.LastInsertRowId;
+            if (result > 0) CustomConsole.PrintSuccess("Client n° " + idClient + " ajouté");
+            else CustomConsole.PrintError("Client non ajouté");
             return new Client()
             {
                 Nom = nom, Prenom = prenom, Telephone = (int) tel, DateFirst = date,
                 Adresse = new Adresse() {NumRue = numRue, Rue = rue, Ville = ville},
-                Id = (int) databaseObject.myConnection.LastInsertRowId
+                Id = idClient
             };
         }
 
@@ -170,15 +189,15 @@ namespace Projet_applications
 
 
             Console.WriteLine("Quelle type de pizza desirez-vous ?\r");
-            Console.WriteLine("1- Quatre fromages\r");
-            Console.WriteLine("2- Barbecue\r");
-            Console.WriteLine("3- Veggie\r");
+            CustomConsole.PrintChoice(1, "Quatre fromages");
+            CustomConsole.PrintChoice(2, "Barbecue");
+            CustomConsole.PrintChoice(3, "Veggie");
             choixNom = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("Quelle taille souhaitez-vous pour votre pizza ?\r");
-            Console.WriteLine("1- Petite\r");
-            Console.WriteLine("2- Moyenne\r");
-            Console.WriteLine("3- Grande\r");
+            CustomConsole.PrintChoice(1, "Petite");
+            CustomConsole.PrintChoice(2, "Moyenne");
+            CustomConsole.PrintChoice(3, "Grande");
             choixTaille = Convert.ToInt32(Console.ReadLine());
 
 
@@ -188,16 +207,16 @@ namespace Projet_applications
                     switch (choixTaille)
                     {
                         case 1:
-                            nom = "quatreFromages";
-                            taille = "petite";
+                            nom = "QuatreFromages";
+                            taille = "Petite";
                             break;
                         case 2:
-                            nom = "quatreFromages";
-                            taille = "moyenne";
+                            nom = "QuatreFromages";
+                            taille = "Moyenne";
                             break;
                         case 3:
-                            nom = "quatreFromages";
-                            taille = "grande";
+                            nom = "QuatreFromages";
+                            taille = "Grande";
                             break;
                     }
 
@@ -206,16 +225,16 @@ namespace Projet_applications
                     switch (choixTaille)
                     {
                         case 1:
-                            nom = "barbecue";
-                            taille = "petite";
+                            nom = "Barbecue";
+                            taille = "Petite";
                             break;
                         case 2:
-                            nom = "barbecue";
-                            taille = "moyenne";
+                            nom = "Barbecue";
+                            taille = "Moyenne";
                             break;
                         case 3:
-                            nom = "barbecue";
-                            taille = "grande";
+                            nom = "Barbecue";
+                            taille = "Grande";
                             break;
                     }
 
@@ -224,50 +243,47 @@ namespace Projet_applications
                     switch (choixTaille)
                     {
                         case 1:
-                            nom = "veggie";
-                            taille = "petite";
+                            nom = "Veggie";
+                            taille = "Petite";
                             break;
                         case 2:
-                            nom = "veggie";
-                            taille = "moyenne";
+                            nom = "Veggie";
+                            taille = "Moyenne";
                             break;
                         case 3:
-                            nom = "veggie";
-                            taille = "grande";
+                            nom = "Veggie";
+                            taille = "Grande";
                             break;
                     }
 
                     break;
             }
 
-            string queryId = "select id from Pizzas where nom = \"" + nom + "\" and taille = \"" + taille + "\"";
+            string queryId = "select id , prix from Pizza where nom LIKE '" + nom + "' and taille LIKE'" + taille + "'";
+            Console.WriteLine(queryId);
             SQLiteCommand idCommand = new SQLiteCommand(queryId, databaseObject.myConnection);
             SQLiteDataReader readerId = idCommand.ExecuteReader();
             while (readerId.Read())
             {
                 id = readerId.GetInt32(0);
+                prix = readerId.GetInt32(1);
             }
-
-            string queryPrix = "select prix from Pizzas where id = " + id;
-            SQLiteCommand prixCommand = new SQLiteCommand(queryPrix, databaseObject.myConnection);
-            SQLiteDataReader readerPrix = prixCommand.ExecuteReader();
-            while (readerPrix.Read())
-            {
-                prix = readerPrix.GetInt32(0);
-            }
-
-            databaseObject.myConnection.Close();
-            Console.WriteLine("id=" + id);
 
             Type nomPizza = (Type) Enum.Parse(typeof(Type), nom);
-            Taille taillePizza = (Taille) Enum.Parse(typeof(Type), taille);
+            Taille taillePizza = (Taille) Enum.Parse(typeof(Taille), taille);
 
             Pizza pizza = new Pizza() {Id = id, taille = taillePizza, type = nomPizza};
 
-            CurrentCommande.Pizza.Add(pizza);
+            CurrentCommande.AddPizza(pizza);
 
-            Facture facture = new Facture() {Id = 1, Prix = prix};
-            facture.AjouterPrixFacture(prix);
+            string insertPizza = "Insert into PizzaCommande (pizzaId,commandeId) VALUES (" + id + " , " +
+                                 CurrentCommande.Id + ")";
+            string insertFacture = "UPDATE facture SET prix = prix + " + prix;
+            SQLiteCommand commandPizza = new SQLiteCommand(insertPizza, databaseObject.myConnection);
+            SQLiteCommand commandFacture = new SQLiteCommand(insertFacture, databaseObject.myConnection);
+            commandPizza.ExecuteNonQuery();
+            commandFacture.ExecuteNonQuery();
+            CurrentCommande.Facture.Prix += prix;
         }
 
         public void GetClients(Database databaseObject)
@@ -306,7 +322,7 @@ namespace Projet_applications
             String query = "select * from Client where UPPER(ville) LIKE UPPER('" + ville + "')";
             SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
             SQLiteDataReader requete = myCommand.ExecuteReader();
-            if (!requete.HasRows) Console.WriteLine("Aucun client à " + ville);
+            if (!requete.HasRows) CustomConsole.PrintError("Aucun client à " + ville);
             while (requete.Read())
             {
                 Client c = new Client()
@@ -335,7 +351,6 @@ namespace Projet_applications
             tel = double.Parse(Console.ReadLine());
 
             String rue = null;
-            databaseObject.myConnection.Open();
             String query = "select rue, numeroRue, ville from Client where telephone =  " + tel;
             SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
             SQLiteDataReader rdr = myCommand.ExecuteReader();
@@ -344,7 +359,6 @@ namespace Projet_applications
             adresse.Rue = Convert.ToString(rdr["rue"]);
             adresse.NumRue = Convert.ToInt32(rdr["numeroRue"]);
             adresse.Ville = Convert.ToString(rdr["ville"]);
-            databaseObject.myConnection.Close();
             return adresse;
         }
 
@@ -359,7 +373,7 @@ namespace Projet_applications
                 "select  c.id, c.nom , prenom , ville, telephone , dateFirst , numeroRue , rue , SUM(prix) from Client c , Commande co  , Facture f WHERE c.id=co.clientId AND f.id=co.factureId GROUP BY c.id";
             SQLiteCommand myCommand = new SQLiteCommand(query, database.myConnection);
             SQLiteDataReader requete = myCommand.ExecuteReader();
-            if (!requete.HasRows) Console.WriteLine("Aucun client");
+            if (!requete.HasRows) CustomConsole.PrintError("Aucun client");
             while (requete.Read())
             {
                 Client c = new Client()
@@ -388,18 +402,19 @@ namespace Projet_applications
             int idCommand;
             if (!Int32.TryParse(stringIdCommande, out idCommand))
             {
-                Console.WriteLine("Veuillez entrer un numero valide ");
+                CustomConsole.PrintError("Veuillez entrer un numero valide ");
                 goto Begin;
             }
 
             String query =
-                "SELECT c.id , heure , 'date', cl.nom , cl.prenom , cl.id , p.nom , a.nom " +
-                "FROM Commande c, Client cl , Annexe a , Pizza p , AnnexeCommande ac , PizzaCommande pc " +
-                "WHERE c.id=ac.commandeId AND a.id=ac.annexeId AND c.id=pc.commandeId AND p.id=pc.pizzaId AND c.id=cl.id AND c.id=" +
+                "SELECT c.id , heure , 'date', cl.nom , cl.prenom , cl.id , p.nom , a.nom , f.id , f.prix " +
+                "FROM Commande c, Client cl , Annexe a , Pizza p , AnnexeCommande ac , PizzaCommande pc , Facture f " +
+                "WHERE c.id=ac.commandeId AND c.factureId=f.id AND a.id=ac.annexeId AND c.id=pc.commandeId AND p.id=pc.pizzaId AND c.id=cl.id AND c.id=" +
                 idCommand;
+            Console.WriteLine(query);
             SQLiteCommand myCommand = new SQLiteCommand(query, database.myConnection);
             SQLiteDataReader requete = myCommand.ExecuteReader();
-            if (!requete.HasRows) Console.WriteLine("Aucune commande correspondant à  ce numero " + idCommand);
+            if (!requete.HasRows) CustomConsole.PrintError("Aucune commande correspondant à  ce numero " + idCommand);
             Commande c = null;
             while (requete.Read())
             {
@@ -415,6 +430,8 @@ namespace Projet_applications
                             Nom = (string) requete.GetValue(3),
                             Prenom = (string) requete.GetValue(4),
                         },
+                        Facture = new Facture()
+                            {Id = Int32.Parse("" + requete.GetValue(8)), Prix = Double.Parse("" + requete.GetValue(9))},
                         Pizza = new List<Pizza>(),
                         Annexe = new List<Annexe>(),
                     };
