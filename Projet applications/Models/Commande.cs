@@ -94,7 +94,7 @@ namespace Projet_applications
                 {
                     string updateCommande = "UPDATE Commande SET etat = 'Ferme' WHERE id="+Id;
                     int coutnRow = new SQLiteCommand(updateCommande, db.myConnection).ExecuteNonQuery();
-                    Console.WriteLine("Commande n°"+Id + " fermée");
+                    CustomConsole.PrintInfo("Commande n°"+Id + " fermée");
                 }
             }
         }

@@ -10,10 +10,11 @@ namespace Projet_applications
     {
         public async void PreparerCommande()
         {
-            Console.WriteLine("Preparation de la commande n°"+ CurrentCommande.Id+" en cours");
+            CustomConsole.PrintInfo("Preparation de la commande n°"+ CurrentCommande.Id+" en cours");
             await Task.Delay(10000);
+            CustomConsole.PrintInfo("Commande n°"+ CurrentCommande.Id+" prete");
             CurrentCommande.Etat = Etat.Livraison;
-            Console.WriteLine("Commande n°"+ CurrentCommande.Id+" prete");
+            
         }
     }
 }

@@ -27,5 +27,12 @@ namespace Projet_applications
             Console.ResetColor();
             Console.WriteLine(" : "+msg);
         }
+        
+        public static void PrintInfo(string msg)
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine(msg);
+            Console.ResetColor();
+        }
     }
 }

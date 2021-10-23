@@ -9,16 +9,17 @@ namespace Projet_applications
     {
         public void PrendreCommande()
         {
-            Console.WriteLine("Récupération de la commande n°" + CurrentCommande.Id);
+            CustomConsole.PrintInfo("Récupération de la commande n°" + CurrentCommande.Id);
             CurrentCommande.Etat = Etat.Pret;
         }
 
         public async void EffectuerLivraison()
         {
-            Console.WriteLine("Livraison en cours");
+            CustomConsole.PrintInfo("Livraison en cours");
             await Task.Delay(10000);
+            CustomConsole.PrintInfo("Livraison de la commande n°"+CurrentCommande.Id + " effectuée");
             CurrentCommande.Etat = Etat.Ferme;
-            Console.WriteLine("Livraison de la commande n°"+CurrentCommande.Id + " effectuée");
+            
         }
     }
 }

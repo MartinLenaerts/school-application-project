@@ -1,5 +1,7 @@
 using System;
+using System.Data.Entity.Infrastructure.Interception;
 using System.Data.SQLite;
+using System.Linq.Expressions;
 
 namespace Projet_applications
 {
@@ -21,7 +23,7 @@ namespace Projet_applications
                 Database.Seed();
                 hasSeeding = true;
             }
-            
+
             if (CurrentCommis == null)
             {
                 Begin:
@@ -188,18 +190,19 @@ namespace Projet_applications
             }
         }
 
-        
 
         public void StatistiquesManagement()
         {
+            Begin:
             int choixStats;
-            
+
             Console.WriteLine("Entrez : ");
             CustomConsole.PrintChoice(1, "Afficher par commis, le nombre de commandes gerees");
             CustomConsole.PrintChoice(2, "Afficher par livreur le nombre de livraisons effectuees ");
             CustomConsole.PrintChoice(3, "Afficher les commandes selon une periode de temps ");
             CustomConsole.PrintChoice(4, "Afficher la moyenne des prix des commandes");
             CustomConsole.PrintChoice(5, "Afficher la moyenne des comptes clients");
+            CustomConsole.PrintChoice(9, "Quitter ");
             choixStats = Convert.ToInt32(Console.ReadLine());
 
             switch (choixStats)
@@ -213,12 +216,13 @@ namespace Projet_applications
                     SQLiteCommand myCommand1 = new SQLiteCommand(query1, Database.myConnection);
                     SQLiteDataReader requete1 = myCommand1.ExecuteReader();
                     if (!requete1.HasRows) Console.WriteLine("Aucun commis avec cet id\n\n\n");
-                    for (int i =1;  requete1.Read(); i++)
+                    for (int i = 1; requete1.Read(); i++)
                     {
                         nbCommandes = i;
                     }
-                    Console.WriteLine("Ce commis est lié à" + nbCommandes + "commandes\n\n\n");
-                    break;
+
+                    Console.WriteLine("Ce commis est lié à " + nbCommandes + " commandes\n\n\n");
+                    goto Begin;
                 case 2:
                     int livreurId;
                     int nbLivraisons = 0;
@@ -232,15 +236,18 @@ namespace Projet_applications
                     {
                         nbLivraisons = i;
                     }
-                    Console.WriteLine("Ce livreur est lié à" + nbLivraisons + "commandes\n\n\n");
-                    break;
+
+                    Console.WriteLine("Ce livreur est lié à " + nbLivraisons + " commandes\n\n\n");
+                    goto Begin;
                 case 3:
-                    string query3 = "SELECT * FROM Commande WHERE date = strftime('%d-%m-%Y %H:%M:%S', '2012-09-13 12:44:22')";
+                    string query3 =
+                        "SELECT * FROM Commande WHERE date = strftime('%d-%m-%Y %H:%M:%S', '2012-09-13 12:44:22')";
                     SQLiteCommand myCommand3 = new SQLiteCommand(query3, Database.myConnection);
                     SQLiteDataReader requete3 = myCommand3.ExecuteReader();
-                    break;
+                    CustomConsole.PrintError("Fonctionnalité non implémentée");
+                    goto Begin;
                 case 4:
-                    float avgCommandes =0;
+                    float avgCommandes = 0;
                     string query4 = "SELECT AVG(prix) FROM Facture";
                     SQLiteCommand myCommand4 = new SQLiteCommand(query4, Database.myConnection);
                     SQLiteDataReader requete4 = myCommand4.ExecuteReader();
@@ -248,13 +255,16 @@ namespace Projet_applications
                     {
                         avgCommandes = requete4.GetFloat(0);
                     }
-                    Console.WriteLine("La moyenne des prix des commandes est :" + avgCommandes + "euros\n\n\n");
-                    break;
+
+                    Console.WriteLine("La moyenne des prix des commandes est : " + avgCommandes + " euros\n\n\n");
+                    goto Begin;
                 case 5:
-                    string query5 = "SELECT ";
-                    SQLiteCommand myCommand5 = new SQLiteCommand(query5, Database.myConnection);
-                    SQLiteDataReader requete5 = myCommand5.ExecuteReader();
+                    CustomConsole.PrintError("Fonctionnalité non implémentée");
+                    goto Begin;
+                case 9:
                     break;
+                default:
+                    goto Begin;
             }
         }
     }
