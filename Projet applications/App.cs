@@ -18,6 +18,7 @@ namespace Projet_applications
 
         public void Start()
         {
+
             Database.Open();
 
             Begin:

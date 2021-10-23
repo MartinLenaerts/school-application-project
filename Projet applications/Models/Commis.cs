@@ -231,7 +231,7 @@ namespace Projet_applications
             Console.WriteLine("id=" + id);
 
             Type nomPizza = (Type) Enum.Parse(typeof(Type), nom);
-            Taille taillePizza = (Taille) Enum.Parse(typeof(Type), nom);
+            Taille taillePizza = (Taille) Enum.Parse(typeof(Type), taille);
 
             Pizza pizza = new Pizza() {Id = id, taille = taillePizza, type = nomPizza};
 
