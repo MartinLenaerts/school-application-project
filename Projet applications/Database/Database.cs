@@ -1,8 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Data.SQLite;
 
 
- namespace Projet_applications
+namespace Projet_applications
 {
     public class Database
     {
@@ -10,54 +11,14 @@ using System.Data.SQLite;
 
         public Database()
         {
-            myConnection = new SQLiteConnection("Data Source=database.sqlite3");
-
-
-            if (File.Exists("./database.sqlite3") == false)
+            try
             {
-                SQLiteConnection.CreateFile("database.sqlite3");
-                System.Console.WriteLine("Created Database");
-
+                myConnection = new SQLiteConnection("Data Source=database.sqlite3");
             }
-
-            if (File.Exists("./database.sqlite3"))
+            catch (Exception e)
             {
-                System.Console.WriteLine("already exists");
-           
-            }
-
-            /*void OpenConnection()
-            {
-                if(myConnection.State == System.Data.ConnectionState.Open)
-                {
-                    myConnection.Open();
-                }
-            }
-            void CloseConnection()
-            {
-                if(myConnection.State != System.Data.ConnectionState.Closed)
-                {
-                    myConnection.Clone();
-                }
-            }*/
-
-           
-        }
-
-       /* internal void CloseConnection()
-        {
-            if (myConnection.State != System.Data.ConnectionState.Closed)
-            {
-                myConnection.Clone();
+                Console.WriteLine(e.Message);
             }
         }
-
-        internal void OpenConnection()
-        {
-            if (myConnection.State == System.Data.ConnectionState.Open)
-            {
-                myConnection.Open();
-            }
-        }*/
     }
 }
