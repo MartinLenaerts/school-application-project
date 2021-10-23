@@ -181,20 +181,25 @@ namespace Projet_applications
         }
 
 
-        public String trouverRue(Database databaseObject)
+        public Adresse trouverAdresse(Database databaseObject)
         {
-
+            Adresse adresse = new Adresse();
             double tel = 0;
-            Console.WriteLine("Saisissez le numero de telephone � partir duquel retrouver l'adresse");
+            Console.WriteLine("Saisissez le numero de telephone a partir duquel retrouver l'adresse");
             tel = double.Parse(Console.ReadLine());
 
             String rue = null;
             databaseObject.myConnection.Open();
-            String query = "select rue from Client where tel =  " + tel;
+            String query = "select rue, numeroRue, ville from Client where telephone =  " + tel;
             SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection);
             SQLiteDataReader rdr = myCommand.ExecuteReader();
+            bool rez = rdr.Read();
+            Console.WriteLine(rez);
+            adresse.Rue = Convert.ToString(rdr["rue"]);
+            adresse.NumRue = Convert.ToInt32(rdr["numeroRue"]);
+            adresse.Ville = Convert.ToString(rdr["ville"]);
             databaseObject.myConnection.Close();
-            return rue;
+            return adresse;
         }
 
         /*nom = "quatreFromage";

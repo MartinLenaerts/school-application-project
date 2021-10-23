@@ -28,10 +28,14 @@ namespace Projet_applications
             Console.WriteLine("Rows added : {0}", result);
 */
             Commis commis = new Commis(1,"CommisNom","CommisPrenom");
-            commis.AjouterClient(databaseObject);
+            //commis.AjouterClient(databaseObject);
             //commis.GetClients(databaseObject);
             commis.GetClientsByCity(databaseObject);
-            commis.trouverRue(databaseObject);
+            Adresse adresse = new Adresse();
+            adresse = commis.trouverAdresse(databaseObject);
+            Console.WriteLine(adresse.Rue);
+            
+            
 
            
 
