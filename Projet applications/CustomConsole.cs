@@ -9,14 +9,14 @@ namespace Projet_applications
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(msg);
-            Console.ForegroundColor = ConsoleColor.Black;
+            Console.ResetColor();
         }
         
         public static void PrintError(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(msg);
-            Console.ForegroundColor = ConsoleColor.Black;
+            Console.ResetColor();
         }
         
         
@@ -24,7 +24,7 @@ namespace Projet_applications
         {
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write(number);
-            Console.ForegroundColor = ConsoleColor.Black;
+            Console.ResetColor();
             Console.WriteLine(" : "+msg);
         }
     }

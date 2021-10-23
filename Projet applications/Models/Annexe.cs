@@ -2,6 +2,7 @@ namespace Projet_applications
 {
     public class Annexe
     {
+        public int Id { get; set; }
         public string Nom { get; set; }
 
         public int Prix { get; set; }
