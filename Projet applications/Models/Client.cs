@@ -13,16 +13,18 @@ namespace Projet_applications
 
         public string Prenom { get; set; }
 
-        public string Adresse { get; set; }
-
         public int Telephone { get; set; }
 
-        public Client(int id, string nom, string prenom, string adresse, int telephone)
+        public Adresse adresse;
+
+        public Client(int id, string nom, string prenom, String rue, String ville, int numRue, int telephone)
         {
             Id = id;
             Nom = nom;
             Prenom = prenom;
-            Adresse = adresse;
+            adresse.Rue = rue;
+            adresse.Ville = ville;
+            adresse.NumRue = numRue;
             Telephone = telephone;
         }
     }
